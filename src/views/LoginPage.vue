@@ -25,6 +25,10 @@ const handleLogin = () => {
     console.log('✅ 로그인 성공!');
     errorMessage.value = '';
 
+    // 로그인 정보 저장 (MainPage생기면, getItem('userId')추가해야할듯!)
+    localStorage.setItem('userId', userId.value);
+    console.log('저장된 id : ', localStorage.getItem('userId'));
+
     // 로그인 성공 시 페이지 이동
     router.push('/main');
   } else {
@@ -39,25 +43,43 @@ const handleLogin = () => {
   <!-- <ToastNotification /> -->
 
   <div class="login-container">
-    <h1>로그인</h1>
+    <h1>Login</h1>
     <!-- 로그인 버튼 누르면 handleLogin 함수 실행 -->
     <form @submit.prevent="handleLogin">
       <!-- 아이디 입력칸 -->
       <div class="input-group">
         <label for="userId">아이디</label>
-        <input id="userId" v-model="userId" type="text" required />
+        <input
+          id="userId"
+          v-model="userId"
+          type="text"
+          required
+          placeholder="Please enter your ID"
+        />
       </div>
       <!-- 비밀번호 입력칸 -->
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input id="password" v-model="password" type="password" required />
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          required
+          placeholder="Please enter your PW"
+        />
       </div>
 
       <!-- 에러 메시지 표시 -->
       <p v-if="errorMessage" class="error-msg">{{ errorMessage }}</p>
 
       <!-- 로그인 버튼 -->
-      <button type="submit">로그인</button>
+      <button type="submit">SIGN IN</button>
+
+      <!-- 회원가입 버튼 -->
+      <p class="signup-text">
+        Don't have an account?
+        <router-link to="/join" class="signup-link">SIGN UP NOW</router-link>
+      </p>
     </form>
   </div>
 </template>
@@ -85,10 +107,14 @@ input {
 button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #4caf50;
-  color: white;
+  background-color: #b3e5fc;
+  color: #777;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #81d4fa;
 }
 </style>
