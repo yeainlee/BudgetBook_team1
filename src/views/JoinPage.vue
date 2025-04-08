@@ -94,4 +94,45 @@ const phone = ref('');
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.join-container {
+  max-width: 450px;
+  margin: 80px auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #90caf9;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #64b5f6;
+}
+</style>
