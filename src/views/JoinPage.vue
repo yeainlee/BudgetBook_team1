@@ -8,7 +8,7 @@ const name = ref('');
 const email = ref('');
 const phone = ref('');
 
-// 에러 메시지 변수수
+// 에러 메시지 변수
 const userIdError = ref('');
 const passwordError = ref('');
 const confirmPasswordError = ref('');
@@ -78,7 +78,7 @@ const handleSubmit = () => {
     hasError = true;
   }
 
-  // 폰번호 입력 확인인
+  // 폰번호 입력 확인
   // 폰번호 형식 체크
   if (!phone.value) {
     phoneError.value = '휴대폰 번호를 입력해주세요.';
