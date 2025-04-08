@@ -18,5 +18,5 @@ import Header from './components/layout/Header.vue';
         <router-view />
       </section>
     </main>
-  </div>
+    </div>
 </template>
