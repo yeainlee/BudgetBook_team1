@@ -1,39 +1,31 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore';
 
 const router = useRouter();
+const userStore = useUserStore(); //pinia store 사용
 
 const userId = ref('');
 const password = ref('');
 const errorMessage = ref('');
 
 // 로그인 버튼을 눌렀을 때 실행되는 함수
-const handleLogin = () => {
-  console.log('입력된 아이디 : ', userId.value);
-  console.log('입력된 비밀번호 : ', password.value);
-
-  // 아이디, 비밀번호 미입력 시, 뜨는 알람
+// Pinia login 함수 사용
+const handleLogin = async () => {
   if (!userId.value || !password.value) {
     errorMessage.value = '아이디와 비밀번호를 모두 입력해주세요.';
     return;
   }
+  try {
+    const loginSuccess = await userStore.login(userId.value, password.value);
 
-  //임시 로그인 로직 (나중에 API로 교체할 부분)
-  if (userId.value === 'admin' && password.value == '1234') {
-    // 로그인 성공 시
-    console.log('✅ 로그인 성공!');
-    errorMessage.value = '';
-
-    // 로그인 정보 저장 (MainPage생기면, getItem('userId')추가해야할듯!)
-    localStorage.setItem('userId', userId.value);
-    console.log('저장된 id : ', localStorage.getItem('userId'));
-
-    // 로그인 성공 시 페이지 이동
-    router.push('/main');
-  } else {
-    // 로그인 실패 시
-    errorMessage.value = '❌ 아이디 또는 비밀번호가 틀렸습니다.';
+    if (loginSuccess) {
+      errorMessage.value = '';
+      router.push('/main');
+    }
+  } catch (err) {
+    errorMessage.value = err.message || '로그인에 실패했습니다.';
   }
 };
 </script>
