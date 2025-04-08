@@ -13,7 +13,7 @@
         <router-view />
       </section>
     </main>
-  </div>
+    </div>
 </template>
 
 <script setup>
