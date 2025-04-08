@@ -1,16 +1,21 @@
 <template>
   <aside class="sidebar">
-    <div
-      v-for="(item, index) in menuItems"
-      :key="index"
-      class="icon"
-      :class="{ active: isActive(item.route) }"
-      @click="navigateTo(item.route)"
-    >
-      <i :class="item.icon"></i>
+    <!-- 기존 메뉴 아이템들 -->
+    <div class="menu-items">
+      <div
+        v-for="(item, index) in menuItems"
+        :key="index"
+        class="icon"
+        :class="{ active: isActive(item.route) }"
+        @click="navigateTo(item.route)"
+      >
+        <i :class="item.icon"></i>
+      </div>
     </div>
+
+    <!-- 로그아웃 버튼 (하단에 고정) -->
     <div class="logout-container">
-      <div class="icon logout" @click="logout">
+      <div class="icon logout" @click="handleLogout">
         <i class="fa-solid fa-sign-out-alt"></i>
       </div>
     </div>
@@ -19,11 +24,11 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
-import { useUserStore } from '../../store/index';
+import { useUserStore } from '../../store/userStore'; // Pinia 스토어 import
 
 const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
+const userStore = useUserStore(); // Pinia 스토어 사용
 
 // 메뉴 아이템 정의
 const menuItems = [
@@ -34,12 +39,12 @@ const menuItems = [
   },
   {
     icon: 'fa-solid fa-chart-line',
-    route: '/transactions',
+    route: '/transaction',
     name: '거래내역',
   },
   {
     icon: 'fa-solid fa-plus',
-    route: '/transactions/edit',
+    route: '/transaction/edit/:id',
     name: '거래추가',
   },
   {
@@ -55,13 +60,16 @@ const isActive = (path) => {
     return true;
   }
   if (
-    path === '/transactions' &&
-    route.path.startsWith('/transactions') &&
-    route.path !== '/transactions/edit'
+    path === '/transaction' &&
+    route.path.startsWith('/transaction') &&
+    route.path !== '/transaction/edit/:id'
   ) {
     return true;
   }
-  if (path === '/transactions/edit' && route.path === '/transactions/edit') {
+  if (
+    path === '/transaction/edit/:id' &&
+    route.path === '/transaction/edit/:id'
+  ) {
     return true;
   }
   if (path === '/my' && route.path === '/my') {
@@ -77,8 +85,9 @@ const navigateTo = (path) => {
   }
 };
 
-const logout = () => {
-  userStore.logout();
+// 로그아웃
+const handleLogout = () => {
+  userStore.logout(); // userStore의 logout 액션 호출
   router.push('/login');
 };
 </script>
@@ -89,15 +98,23 @@ const logout = () => {
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* 중앙 정렬로 변경 */
   box-shadow: 1px 0 4px rgba(0, 0, 0, 0.05);
+  height: 100vh; /* 전체 높이 사용 */
+  padding: 20px 0; /* 상하 패딩 추가 */
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 100px; /* 메뉴와 로그아웃 버튼 사이 간격 조정 */
 }
 
 .icon {
   font-size: 22px;
-  margin: 18px 0;
   width: 40px;
   height: 40px;
   display: flex;
@@ -123,7 +140,8 @@ const logout = () => {
 }
 
 .logout-container {
-  margin-top: 200px; /* 상단 아이템과 최대한 거리 확보 */
+  position: absolute; /* 절대 위치 지정 */
+  bottom: 40px; /* 하단에서 간격 조정 */
 }
 
 .logout {

@@ -1,14 +1,10 @@
 <template>
   <header class="header">
     <div class="welcome">
-      <h2>Welcome, {{ username }}</h2>
+      <h2>Welcome, {{ userName }}</h2>
       <p>{{ currentDateFormatted }}</p>
     </div>
     <div class="search-notification">
-      <div class="search">
-        <input type="text" placeholder="Search" />
-        <i class="fa-solid fa-search"></i>
-      </div>
       <div class="notification">
         <i class="fa-solid fa-bell"></i>
       </div>
@@ -17,11 +13,17 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
-import { useUserStore } from '@/store/index';
+import { computed } from 'vue';
+import { useUserStore } from '../../store/userStore';
 
 const userStore = useUserStore();
-const username = computed(() => userStore.user?.username || 'BudgetNugget');
+
+// 사용자 이름 표시 (로그인된 상태면 사용자 이름, 아니면 기본값)
+const userName = computed(() =>
+  userStore.isLoggedIn && userStore.user
+    ? userStore.user.user_nickname
+    : 'BudgetNugget'
+);
 
 // 현재 날짜 형식 지정
 const currentDateFormatted = computed(() => {
@@ -33,13 +35,6 @@ const currentDateFormatted = computed(() => {
     year: 'numeric',
   };
   return now.toLocaleDateString('en-US', options);
-});
-
-// 컴포넌트 마운트 시 사용자 정보 로드
-onMounted(() => {
-  if (localStorage.getItem('token')) {
-    userStore.dispatch('fetchUserProfile');
-  }
 });
 </script>
 
