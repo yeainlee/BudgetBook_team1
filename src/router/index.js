@@ -5,37 +5,37 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import MyPage from '../views/MyPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import JoinPage from '../views/JoinPage.vue';
-import { useUserStore } from '@/store/userStore';
+//import { useUserStore } from '@/store/userStore';
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/main',
-  },
-  {
-    path: '/main',
-    name: 'MainPage',
-    component: MainPage,
-    // meta: { requiresAuth: true },
-    // 로그인 했을 때 접근 가능함 -> true
-  },
-  {
-    path: '/transaction',
-    name: 'TransactionPage',
-    component: TransactionPage,
-    // meta: { requiresAuth: true },
-  },
-  {
-    path: '/transaction/edit/:id',
-    name: 'TransactionEditPage',
-    component: TransactionEditPage,
-  },
-  {
-    path: '/my',
-    name: 'MyPage',
-    component: MyPage,
-    // meta: { requiresAuth: true },
-  },
+  // {
+  //   path: '/',
+  //   redirect: '/main',
+  // },
+  // {
+  //   path: '/main',
+  //   name: 'MainPage',
+  //   component: MainPage,
+  //   // meta: { requiresAuth: true },
+  //   // 로그인 했을 때 접근 가능함 -> true
+  // },
+  // {
+  //   path: '/transaction',
+  //   name: 'TransactionPage',
+  //   component: TransactionPage,
+  //   // meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/transaction/edit/:id',
+  //   name: 'TransactionEditPage',
+  //   component: TransactionEditPage,
+  // },
+  // {
+  //   path: '/my',
+  //   name: 'MyPage',
+  //   component: MyPage,
+  //   // meta: { requiresAuth: true },
+  // },
   {
     path: '/login',
     name: 'LoginPage',
