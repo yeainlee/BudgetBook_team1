@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JoinPage - BudgetNugget</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>BudgetNugget</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -20,31 +19,10 @@
     ></script>
   </head>
   <body>
-    <div class="container">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="icon active"><i class="fa-solid fa-house-signal"></i></div>
-        <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
-        <div class="icon"><i class="fa-solid fa-plus"></i></div>
-        <div class="icon"><i class="fa-solid fa-user-pen"></i></div>
-      </aside>
+    <!-- Vue 앱을 마운트할 요소 -->
+    <div id="app"></div>
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Top Header -->
-        <header class="header">
-          <div class="welcome">
-            <h2>Welcome, BudgetNugget</h2>
-            <p>Tue, 07 June 2022</p>
-          </div>
-        </header>
-
-        <!-- Blue Banner -->
-        <section class="banner"></section>
-
-        <!-- White Content Box -->
-        <section class="content-box"></section>
-      </main>
-    </div>
+    <!-- main.js 스크립트 연결 -->
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
