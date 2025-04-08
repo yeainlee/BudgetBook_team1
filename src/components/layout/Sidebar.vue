@@ -1,0 +1,154 @@
+<template>
+  <aside class="sidebar">
+    <!-- 기존 메뉴 아이템들 -->
+    <div class="menu-items">
+      <div
+        v-for="(item, index) in menuItems"
+        :key="index"
+        class="icon"
+        :class="{ active: isActive(item.route) }"
+        @click="navigateTo(item.route)"
+      >
+        <i :class="item.icon"></i>
+      </div>
+    </div>
+
+    <!-- 로그아웃 버튼 (하단에 고정) -->
+    <div class="logout-container">
+      <div class="icon logout" @click="handleLogout">
+        <i class="fa-solid fa-sign-out-alt"></i>
+      </div>
+    </div>
+  </aside>
+</template>
+
+<script setup>
+import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from '../../store/userStore'; // Pinia 스토어 import
+
+const router = useRouter();
+const route = useRoute();
+const userStore = useUserStore(); // Pinia 스토어 사용
+
+// 메뉴 아이템 정의
+const menuItems = [
+  {
+    icon: 'fa-solid fa-house-signal',
+    route: '/main',
+    name: '대시보드',
+  },
+  {
+    icon: 'fa-solid fa-chart-line',
+    route: '/transaction',
+    name: '거래내역',
+  },
+  {
+    icon: 'fa-solid fa-plus',
+    route: '/transaction/edit/:id',
+    name: '거래추가',
+  },
+  {
+    icon: 'fa-solid fa-user-pen',
+    route: '/my',
+    name: '프로필',
+  },
+];
+
+// 현재 활성화된 메뉴 확인
+const isActive = (path) => {
+  if (path === '/main' && route.path === '/main') {
+    return true;
+  }
+  if (
+    path === '/transaction' &&
+    route.path.startsWith('/transaction') &&
+    route.path !== '/transaction/edit/:id'
+  ) {
+    return true;
+  }
+  if (
+    path === '/transaction/edit/:id' &&
+    route.path === '/transaction/edit/:id'
+  ) {
+    return true;
+  }
+  if (path === '/my' && route.path === '/my') {
+    return true;
+  }
+  return false;
+};
+
+// 네비게이션 함수
+const navigateTo = (path) => {
+  if (route.path !== path) {
+    router.push(path);
+  }
+};
+
+// 로그아웃
+const handleLogout = () => {
+  userStore.logout(); // userStore의 logout 액션 호출
+  router.push('/login');
+};
+</script>
+
+<style scoped>
+.sidebar {
+  width: 60px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* 중앙 정렬로 변경 */
+  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.05);
+  height: 100vh; /* 전체 높이 사용 */
+  padding: 20px 0; /* 상하 패딩 추가 */
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 100px; /* 메뉴와 로그아웃 버튼 사이 간격 조정 */
+}
+
+.icon {
+  font-size: 22px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon:hover {
+  opacity: 0.7;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.icon.active {
+  opacity: 1;
+  background-color: #eef7ff;
+  border-radius: 10px;
+  padding: 8px;
+  color: #1e88e5;
+}
+
+.logout-container {
+  position: absolute; /* 절대 위치 지정 */
+  bottom: 40px; /* 하단에서 간격 조정 */
+}
+
+.logout {
+  color: #e53935; /* 로그아웃 아이콘 색상을 빨간색으로 변경 */
+}
+
+.logout:hover {
+  background-color: rgba(229, 57, 53, 0.1); /* 호버 시 빨간색 배경 */
+}
+</style>
