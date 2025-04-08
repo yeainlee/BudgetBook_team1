@@ -15,7 +15,7 @@ const handleLogin = () => {
 
   // 아이디, 비밀번호 미입력 시, 뜨는 알람
   if (!userId.value || !password.value) {
-    alert('아이디와 비밀번호를 모두 입력해주세요!');
+    errorMessage.value = '아이디와 비밀번호를 모두 입력해주세요.';
     return;
   }
 
@@ -45,7 +45,7 @@ const handleLogin = () => {
   <div class="login-container">
     <h1>Login</h1>
     <!-- 로그인 버튼 누르면 handleLogin 함수 실행 -->
-    <form @submit.prevent="handleLogin">
+    <form @submit.prevent="handleLogin" novalidate>
       <!-- 아이디 입력칸 -->
       <div class="input-group">
         <label for="userId">아이디</label>
@@ -85,6 +85,12 @@ const handleLogin = () => {
 </template>
 
 <style scoped>
+.error-msg {
+  color: #d32f2f;
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
 .login-container {
   max-width: 400px;
   margin: 100px auto;
