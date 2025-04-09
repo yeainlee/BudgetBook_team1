@@ -2,13 +2,16 @@
 import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
+import { useUserStore } from '@/store/userStore'; //피니아에서 유저 스토어 가져옴
 
 const route = useRoute(); //현재 라우팅 정보
 const router = useRouter(); //이동 기능
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
-const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
+//const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
+const userStore = useUserStore();
+const userId = userStore.user?.id;
 
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
