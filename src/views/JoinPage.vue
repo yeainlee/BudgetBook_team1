@@ -1,5 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore';
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const userId = ref('');
 const password = ref('');
@@ -29,7 +34,7 @@ const isValidPhone = (phone) => {
 };
 
 // 회원가입 처리
-const handleSubmit = () => {
+const handleSubmit = async () => {
   // 에러 초기화
   userIdError.value = '';
   passwordError.value = '';
@@ -88,15 +93,34 @@ const handleSubmit = () => {
     hasError = true;
   }
 
+  // 유효성 검사 실패 시 종료
   if (hasError) return;
 
-  // 임시 성공 처리
-  console.log('✅ 회원가입 성공!');
-  console.log('아이디 : ', userId.value);
-  console.log('이름 : ', name.value);
-  console.log('이메일 : ', email.value);
-  console.log('휴대폰 번호 : ', phone.value);
-  alert('회원가입이 완료되었습니다!');
+  //회원 정보 객체
+  const newUser = {
+    id: userId.value,
+    password: password.value,
+    name: name.value,
+    email: email.value,
+    phone: phone.value,
+  };
+
+  try {
+    // userStore의 createUser 호출
+    await userStore.createUser(newUser);
+    // 임시 성공 처리
+    console.log('✅ 회원가입 성공!');
+    console.log('아이디 : ', userId.value);
+    console.log('이름 : ', name.value);
+    console.log('이메일 : ', email.value);
+    console.log('휴대폰 번호 : ', phone.value);
+    alert('회원가입이 완료되었습니다!');
+
+    // 회원가입 후 로그인 페이지로 이동
+    router.push('/login');
+  } catch (err) {
+    console.error('회원가입 중 오류 발생', err);
+  }
 };
 </script>
 
