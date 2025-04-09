@@ -3,24 +3,25 @@ import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute(); //현재 라우팅 정보
+const router = useRouter(); //이동 기능
 
-const isEdit = computed(() => !!route.params.id);
-const tradeId = route.params.id;
+const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
+const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
 const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
 
-const type = ref('income'); //type이라는 반응형 변수를 선언 초기값 'income'으로 설정
-const date = ref('');
-const price = ref(0);
-const categoryId = ref('');
-const desc = ref('');
-const categoryList = ref([]);
+const type = ref('income'); // 수입/지출 선택
+const date = ref(''); //날짜
+const price = ref(0); //돈
+const categoryId = ref(''); //카테괼 아이디
+const desc = ref(''); //사용하는놈이 쓴 내용
+const categoryList = ref([]); //카테 목록
 
 const fetchCategories = async () => {
   const { data } = await axios.get(`/category?type=${type.value}`);
+  console.log('📦 받아온 카테고리 목록:', data); //콘솔창 확인용 -추가
   categoryList.value = data;
-};
+}; //type(수입/지출)에 따라 맞는 카테고리 떙김
 
 watch(type, fetchCategories); //type 값이 변경될 때마다 fetchCategories 함수를 실행하여 카테고리 목록을 다시 가져옴
 
@@ -32,7 +33,7 @@ const fetchTrade = async () => {
   categoryId.value = data.categoryId;
   desc.value = data.desc;
   await fetchCategories();
-};
+}; //수정일 때 기존 데이터 떙김
 
 const handleSubmit = async () => {
   const payload = {
@@ -50,20 +51,22 @@ const handleSubmit = async () => {
     await axios.post(`/trade_list`, payload);
   }
 
-  router.push('/transactions');
-};
+  router.push('/transactions'); //저장 후 거래목록 페이지로 이동
+}; //저장누르면 실행
 
 const handleDelete = async () => {
   if (confirm('정말 삭제하시겠습니까?')) {
     await axios.delete(`/trade_list/${tradeId}`);
     router.push('/transactions');
   }
-};
+}; //삭제
 
 onMounted(() => {
-  isEdit.value ? fetchTrade() : fetchCategories();
+  isEdit.value ? fetchTrade() : fetchCategories(); //참이면 앞놈 거짓이면 뒷놈
 });
-//포넌트가 화면에 나타날 때 실행할 코드를 정의 여기서는 isEdit 값에 따라 다른 함수를 호출
+//컴포넌트가 화면에 나타날 때 실행할 코드를 정의
+// 여기서는 isEdit 값에 따라 다른 함수를 호출
+//수정 - 기존 거래 / 신규 - 캐테고리 목록
 </script>
 
 <template>
@@ -83,16 +86,17 @@ onMounted(() => {
     </div>
 
     <!-- 날짜 -->
-    <div>
-      <label class="form-label" for="inputdate"> 날짜 </label>
+    <label class="form-label" for="inputdate"> 날짜 </label>
+    <div class="input">
       <input type="date" v-model="date" class="form-control" id="inputdate" />
-      <i class="fa-regular fa-calendar-days"></i>
+      <i class="fa-calendar-days"></i>
     </div>
-    <!--v-model="date": 입력된 값이 date라는 변수와 연결되어 실시간 동기화-->
     <br />
+
     <!-- 금액 -->
-    <div>
-      <label class="form-label" for="inputmoney"> 금액 </label>
+    <label class="form-label" for="inputmoney"> 금액 </label>
+    <div class="input M-input">
+      <span class="currency">₩</span>
       <input
         type="number"
         id="inputmoney"
@@ -102,8 +106,8 @@ onMounted(() => {
     </div>
     <br />
     <!-- 카테고리 -->
-    <div>
-      <label class="form-label" for="inputcategory"> 카테고리 </label>
+    <label class="form-label" for="inputcategory"> 카테고리 </label>
+    <div class="input">
       <select v-model="categoryId" class="form-control" id="inputcategory">
         <option disabled value="">카테고리 선택</option>
         <option v-for="cat in categoryList" :key="cat.id" :value="cat.id">
@@ -113,8 +117,8 @@ onMounted(() => {
     </div>
     <br />
     <!-- 내용 -->
-    <div>
-      <label class="form-label" for="text"> 내용 </label>
+    <label class="form-label" for="text"> 내용 </label>
+    <div class="input">
       <input
         type="text"
         v-model="desc"
@@ -134,18 +138,49 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.input {
+  text-align: center;
+}
+.M-input {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+}
+.M-input .currency {
+  position: absolute;
+  top: 50%;
+  left: 25px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+}
+.M-input input {
+  width: 100%;
+  height: 60px;
+  padding: 1px 20px;
+  padding-left: 30px;
+  font-weight: 550;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  text-align: right;
+}
 .form-label {
   color: rgba(0, 0, 0, 0.5);
+  padding: 30px;
 }
 .form-control {
   padding: 1px 20px;
   width: 500px;
-  height: 50px;
+  height: 60px;
   font-weight: 550;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .edit-page {
-  max-width: 480px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -183,9 +218,11 @@ onMounted(() => {
 
 .button-row {
   display: flex;
-  padding: 6px 35px;
-  justify-content: space-between;
+  padding: 6px;
   gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 button.cancel {
   background: #ddd;
@@ -197,7 +234,7 @@ button.submit {
   flex: 1;
 }
 button.delete {
-  background: #ff4d4f;
+  background: #b7e9fc;
   color: white;
   flex: 1;
 }
