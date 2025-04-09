@@ -9,6 +9,7 @@ const userStore = useUserStore(); //pinia store 사용
 const userId = ref('');
 const password = ref('');
 const errorMessage = ref('');
+const showPassword = ref(false);
 
 // 로그인 버튼을 눌렀을 때 실행되는 함수
 // Pinia login 함수 사용
@@ -52,13 +53,22 @@ const handleLogin = async () => {
       <!-- 비밀번호 입력칸 -->
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input
-          id="password"
-          v-model="password"
-          type="password"
-          required
-          placeholder="Please enter your PW"
-        />
+        <password-wrapper>
+          <input
+            id="password"
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            required
+            placeholder="Please enter your PW"
+          />
+          <button
+            type="button"
+            class="eye-button"
+            @click="showPassword = !showPassword"
+          >
+            {{ showPassword ? '🙈' : '👁️' }}
+          </button>
+        </password-wrapper>
       </div>
 
       <!-- 에러 메시지 표시 -->
@@ -121,5 +131,21 @@ button:disabled {
   background-color: #e0e0e0;
   color: #999;
   cursor: not-allowed;
+}
+.password-wrapper {
+  position: relative;
+}
+.password-wrapper input {
+  padding-right: 2.5rem;
+}
+.eye-button {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
 }
 </style>

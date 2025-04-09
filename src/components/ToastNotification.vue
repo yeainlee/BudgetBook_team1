@@ -1,5 +1,5 @@
 <script setup>
-import { useToastStore } from '@/stores/toastStore';
+import { useToastStore } from '@/store/toastStore';
 import { storeToRefs } from 'pinia';
 
 const toastStore = useToastStore(); // 토스트 알림 상태와 관련된 Pinia 스토어에 접근
