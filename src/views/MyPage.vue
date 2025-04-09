@@ -7,6 +7,23 @@ import ToastMessage from '@/components/ToastNotification.vue';
 
 const userStore = useUserStore();
 const toastStore = useToastStore();
+const selectedImage = ref(profileImage);
+const fileInput = ref(null);
+
+// 프로필 변경 버튼 클릭 시
+const changeProfile = () => {
+  fileInput.value.click(); // 숨겨진 파일 input 클릭
+};
+
+// 파일 선택되면 이미지 변경
+const onFileSelected = (event) => {
+  const file = event.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    selectedImage.value = URL.createObjectURL(file);
+  } else {
+    toastStore.showToast('이미지 파일만 선택해주세요.', 'error');
+  }
+};
 
 // 입력 폼 초기 정보
 const form = ref({
@@ -19,13 +36,14 @@ const form = ref({
 // 초기화 함수
 const resetForm = () => {
   form.value = {
-    username: '',
+    username: form.value.username,
     password: '',
     email: '',
     name: '',
   };
 };
 const handleUpdate = async () => {
+  console.log('PATCH 요청에 사용되는 ID:', userStore.user?.id);
   try {
     // 사용자 정보 업데이트 (PATCH 요청)
     await userStore.updateUser(userStore.user.id, {
@@ -36,7 +54,13 @@ const handleUpdate = async () => {
     });
 
     // 수정된 정보로 현재 사용자 정보 갱신
-    userStore.user = { ...form.value };
+    userStore.user = {
+      ...userStore.user,
+      password: form.value.password,
+      email: form.value.email,
+      user_name: form.value.name,
+    };
+
     toastStore.showToast('회원 정보가 수정되었습니다.', 'success');
     localStorage.setItem('user', JSON.stringify(userStore.user)); // 저장소에도 반영
   } catch (err) {
@@ -51,7 +75,16 @@ const handleUpdate = async () => {
     <div class="setting-wrapper">
       <!-- 왼쪽: 프로필 -->
       <div class="profile-section">
-        <img :src="profileImage" alt="프로필 이미지" />
+        <img :src="selectedImage" alt="프로필 이미지" />
+        <!-- 숨겨진 파일 선택 input -->
+        <input
+          type="file"
+          accept="image/*"
+          ref="fileInput"
+          style="display: none"
+          @change="onFileSelected"
+        />
+        <!-- 버튼 -->
         <button @click="changeProfile" class="profile-button">
           프로필 변경
         </button>
@@ -66,8 +99,9 @@ const handleUpdate = async () => {
           <i class="fa-solid fa-pen-to-square edit-icon" @click="resetForm"></i>
         </div>
         <div>
-          <label>아이디 변경</label>
-          <input v-model="form.username" type="text" />
+          <!-- 아이디는 변경 불가능 -->
+          <label>아이디</label>
+          <input v-model="form.username" type="text" disabled />
         </div>
 
         <div>
