@@ -61,7 +61,7 @@ const data = {
         label : '카테고리별 지출',
         data : dataValues,
         backgroundColor : blueSet,
-        borderColor : '#fff'
+        borderColor : '#fff',
         borderWidth : 1
         }
     ]
