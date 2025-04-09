@@ -8,6 +8,7 @@ const form = ref({
   name: '',
 });
 
+// 초기화 함수
 const resetForm = () => {
   form.value = {
     username: '',
