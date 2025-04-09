@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore';
 
@@ -12,6 +12,9 @@ const confirmPassword = ref('');
 const name = ref('');
 const email = ref('');
 const phone = ref('');
+
+// 중복 확인 여부 상태 변수
+const isIdChecked = ref(false);
 
 // 에러 메시지 변수
 const userIdError = ref('');
@@ -96,6 +99,11 @@ const handleSubmit = async () => {
   // 유효성 검사 실패 시 종료
   if (hasError) return;
 
+  if (!isIdChecked.value) {
+    userIdError.value = '아이디 중복 확인을 해주세요.';
+    return;
+  }
+
   //회원 정보 객체
   const newUser = {
     id: userId.value,
@@ -134,10 +142,17 @@ const checkDuplicate = async () => {
 
   if (isDuplicate) {
     userIdError.value = '이미 사용 중인 아이디입니다.';
+    isIdChecked.value = false;
   } else {
     userIdError.value = '사용 가능한 아이디입니다.';
+    isIdChecked.value = true;
   }
 };
+
+//아이디가 바뀌면 중복 확인 상태 초기화
+watch(userId, () => {
+  isIdChecked.value = false;
+});
 </script>
 
 <template>
