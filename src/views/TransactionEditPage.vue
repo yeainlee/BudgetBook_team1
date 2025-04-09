@@ -128,7 +128,7 @@ onMounted(() => {
       />
     </div>
     <br />
-    <!-- 버튼 영역 -->
+    <!-- 버튼 -->
     <div class="button-row">
       <button class="cancel" @click="router.back()">취소</button>
       <button class="submit" @click="handleSubmit">저장</button>
