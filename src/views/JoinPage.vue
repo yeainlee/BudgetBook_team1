@@ -211,7 +211,7 @@ watch(userId, () => {
             class="eye-button"
             @click="showPassword = !showPassword"
           >
-            {{ showPassword ? '🙈' : '👁️' }}
+            {{ showPassword ? '🙉' : '🙈' }}
           </button>
         </div>
         <p v-if="passwordError" class="error">{{ passwordError }}</p>
@@ -233,7 +233,7 @@ watch(userId, () => {
             class="eye-button"
             @click="showConfirmPassword = !showConfirmPassword"
           >
-            {{ showConfirmPassword ? '🙈' : '👁️' }}
+            {{ showConfirmPassword ? '🙉' : '🙈' }}
           </button>
         </div>
         <p v-if="confirmPasswordError" class="error">

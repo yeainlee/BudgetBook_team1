@@ -66,7 +66,7 @@ const handleLogin = async () => {
             class="eye-button"
             @click="showPassword = !showPassword"
           >
-            {{ showPassword ? '🙈' : '👁️' }}
+            {{ showPassword ? '🙉' : '🙈' }}
           </button>
         </div>
       </div>
@@ -147,5 +147,11 @@ button:disabled {
   font-size: 1.2rem;
   cursor: pointer;
   line-height: 1;
+}
+.eye-button:focus,
+.eye-button:hover {
+  outline: none;
+  background: transparent;
+  box-shadow: none;
 }
 </style>
