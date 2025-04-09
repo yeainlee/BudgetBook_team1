@@ -57,22 +57,36 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 사용자 정보 수정 (PATCH)
-  async function updateUser(id, updatedData) {
+  async function updateUser(userId, updatedData) {
     const toastStore = useToastStore();
     loading.value = true;
     error.value = null;
     try {
-      const response = await axios.patch(`${API_URL}/${id}`, updatedData); // PATCH /users/:id
-      const index = users.value.findIndex((u) => u.id === id);
-      if (index !== -1) {
-        users.value[index] = response.data;
+      // Step 1: 해당 사용자 정보 조회해서 numeric ID 얻기
+      const getRes = await axios.get(`${API_URL}?id=${userId}`);
+      if (!getRes.data.length) {
+        throw new Error('해당 사용자를 찾을 수 없습니다.');
       }
-      if (user.value && user.value.id === id) {
-        user.value = response.data;
+
+      const numericId = getRes.data[0].id;
+
+      // Step 2: 해당 numeric ID로 PATCH 요청
+      const patchRes = await axios.patch(
+        `${API_URL}/${numericId}`,
+        updatedData
+      );
+
+      // 상태 업데이트
+      if (user.value && user.value.id === userId) {
+        user.value = patchRes.data;
+        localStorage.setItem('user', JSON.stringify(user.value));
       }
-      return response.data;
+
+      toastStore.showToast('회원정보가 수정되었습니다.', 'success');
+      return patchRes.data;
     } catch (err) {
-      error.value = err.message || '사용자 정보 수정 실패';
+      error.value = err.message || '회원정보 수정 실패';
+      toastStore.showToast(error.value, 'error');
       throw err;
     } finally {
       loading.value = false;
