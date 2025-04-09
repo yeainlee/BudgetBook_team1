@@ -122,6 +122,22 @@ const handleSubmit = async () => {
     console.error('회원가입 중 오류 발생', err);
   }
 };
+
+// 아이디 중복 확인 함수
+const checkDuplicate = async () => {
+  if (!userId.value) {
+    userIdError.value = '아이디를 입력한 후 중복 확인해주세요.';
+    return;
+  }
+  // userStore의 checkDuplicate 호출
+  const isDuplicate = await userStore.checkIdDuplicate(userId.value);
+
+  if (isDuplicate) {
+    userIdError.value = '이미 사용 중인 아이디입니다.';
+  } else {
+    userIdError.value = '사용 가능한 아이디입니다.';
+  }
+};
 </script>
 
 <template>
@@ -141,6 +157,8 @@ const handleSubmit = async () => {
           placeholder="아이디를 입력하세요"
           required
         />
+        <!-- 아이디 중복 확인 버튼 -->
+        <button type="button" @click="checkDuplicate">중복 확인</button>
         <p v-if="userIdError" class="error">{{ userIdError }}</p>
       </div>
 
@@ -262,5 +280,15 @@ button {
 
 button:hover {
   background-color: #64b5f6;
+}
+
+.input-group button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #64b5f6;
+  color: white;
+  cursor: pointer;
 }
 </style>
