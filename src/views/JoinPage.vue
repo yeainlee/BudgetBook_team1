@@ -173,7 +173,13 @@ watch(userId, () => {
           required
         />
         <!-- 아이디 중복 확인 버튼 -->
-        <button type="button" @click="checkDuplicate">중복 확인</button>
+        <button
+          type="button"
+          @click="checkDuplicate"
+          :disabled="userStore.loading"
+        >
+          중복 확인
+        </button>
         <p v-if="userIdError" class="error">{{ userIdError }}</p>
       </div>
 
@@ -190,7 +196,7 @@ watch(userId, () => {
         <p v-if="passwordError" class="error">{{ passwordError }}</p>
       </div>
 
-      <!-- 비밀번호 확인인 입력 -->
+      <!-- 비밀번호 확인 입력 -->
       <div class="input-group">
         <label for="confirmPassword">비밀번호 확인</label>
         <input
@@ -245,7 +251,9 @@ watch(userId, () => {
       </div>
 
       <!-- 회원가입 버튼 -->
-      <button type="submit">회원가입</button>
+      <button type="submit" :disabled="userStore.loading">
+        {{ userStore.loading ? '가입 중...' : '회원가입' }}
+      </button>
     </form>
   </div>
 </template>
@@ -291,6 +299,11 @@ button {
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 button:hover {
