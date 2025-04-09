@@ -1,3 +1,8 @@
+<script setup>
+import Sidebar from './components/layout/Sidebar.vue';
+import Header from './components/layout/Header.vue';
+</script>
+
 <template>
   <div class="container">
     <!-- Sidebar 컴포넌트 -->
@@ -15,8 +20,3 @@
     </main>
     </div>
 </template>
-
-<script setup>
-import Sidebar from './components/layout/Sidebar.vue';
-import Header from './components/layout/Header.vue';
-</script>
