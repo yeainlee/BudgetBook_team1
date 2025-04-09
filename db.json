@@ -6,7 +6,8 @@
       "user_nickname": "토깽",
       "phone_num": "010-1234-5678",
       "email": "tokkaeng@example.com",
-      "password": "password123"
+      "password": "password123",
+      "name": "토깽"
     },
     {
       "id": "tokkaeng1",
@@ -18,11 +19,31 @@
     }
   ],
   "category": [
-    { "id": 1, "name": "월급", "type": "income" },
-    { "id": 2, "name": "기타", "type": "income" },
-    { "id": 3, "name": "환급금", "type": "income" },
-    { "id": 4, "name": "식비", "type": "outcome" },
-    { "id": 5, "name": "교통", "type": "outcome" }
+    {
+      "id": "1",
+      "name": "월급",
+      "type": "income"
+    },
+    {
+      "id": "2",
+      "name": "기타",
+      "type": "income"
+    },
+    {
+      "id": "3",
+      "name": "환급금",
+      "type": "income"
+    },
+    {
+      "id": "4",
+      "name": "식비",
+      "type": "outcome"
+    },
+    {
+      "id": "5",
+      "name": "교통",
+      "type": "outcome"
+    }
   ],
   "trade_list": [
     {

@@ -2,15 +2,18 @@
 import { ref } from 'vue';
 import profileImage from '@/assets/profile.png';
 import { useUserStore } from '@/store/userStore';
+import { useToastStore } from '@/store/toastStore';
+import ToastMessage from '@/components/ToastNotification.vue';
 
 const userStore = useUserStore();
+const toastStore = useToastStore();
 
 // 입력 폼 초기 정보
 const form = ref({
   username: userStore.user?.id || '',
   password: userStore.user?.password || '',
   email: userStore.user?.email || '',
-  name: userStore.user?.name || '',
+  name: userStore.user?.user_name || '',
 });
 
 // 초기화 함수
@@ -34,9 +37,11 @@ const handleUpdate = async () => {
 
     // 수정된 정보로 현재 사용자 정보 갱신
     userStore.user = { ...form.value };
+    toastStore.showToast('회원 정보가 수정되었습니다.', 'success');
     localStorage.setItem('user', JSON.stringify(userStore.user)); // 저장소에도 반영
   } catch (err) {
     console.error('회원정보 수정 실패:', err);
+    toastStore.showToast('회원정보 수정에 실패했습니다.', 'error');
   }
 };
 </script>
@@ -51,6 +56,8 @@ const handleUpdate = async () => {
           프로필 변경
         </button>
       </div>
+
+      <ToastMessage />
 
       <!-- 오른쪽: 입력 폼 -->
       <form class="form-section">
@@ -118,7 +125,7 @@ const handleUpdate = async () => {
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
-  background-color: #c9eaff;
+  background-color: #b7e9fc;
   cursor: pointer;
 }
 
@@ -180,7 +187,7 @@ const handleUpdate = async () => {
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
-  background-color: #c9eaff;
+  background-color: #b7e9fc;
   cursor: pointer;
 }
 </style>

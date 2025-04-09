@@ -46,7 +46,7 @@ const routes = [
     path: '/join',
     name: 'JoinPage',
     component: JoinPage,
-    meta: { requiresAuth: false },
+    // meta: { requiresAuth: false },
   },
 ];
 
