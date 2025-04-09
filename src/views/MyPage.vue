@@ -1,12 +1,16 @@
 <script setup>
 import { ref } from 'vue';
 import profileImage from '@/assets/profile.png';
+import { useUserStore } from '@/store/userStore';
 
+const userStore = useUserStore();
+
+// 입력 폼 초기 정보
 const form = ref({
-  username: '',
-  password: '',
-  email: '',
-  name: '',
+  username: userStore.user?.id || '',
+  password: userStore.user?.password || '',
+  email: userStore.user?.email || '',
+  name: userStore.user?.name || '',
 });
 
 // 초기화 함수
@@ -17,6 +21,23 @@ const resetForm = () => {
     email: '',
     name: '',
   };
+};
+const handleUpdate = async () => {
+  try {
+    // 사용자 정보 업데이트 (PATCH 요청)
+    await userStore.updateUser(userStore.user.id, {
+      id: form.value.username,
+      password: form.value.password,
+      email: form.value.email,
+      name: form.value.name,
+    });
+
+    // 수정된 정보로 현재 사용자 정보 갱신
+    userStore.user = { ...form.value };
+    localStorage.setItem('user', JSON.stringify(userStore.user)); // 저장소에도 반영
+  } catch (err) {
+    console.error('회원정보 수정 실패:', err);
+  }
 };
 </script>
 
@@ -58,7 +79,7 @@ const resetForm = () => {
         </div>
 
         <div class="form-buttons">
-          <button type="button" @click="handleUpdate">수정</button>
+          <button type="button" @click="handleUpdate">저장</button>
         </div>
       </form>
     </div>
