@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import profileImage from '@/assets/profile.png';
 
 const form = ref({
   username: '',
@@ -24,7 +25,7 @@ const resetForm = () => {
     <div class="setting-wrapper">
       <!-- 왼쪽: 프로필 -->
       <div class="profile-section">
-        <img :src="'https://placekitten.com/100/100'" alt="프로필 이미지" />
+        <img :src="profileImage" alt="프로필 이미지" />
         <button @click="changeProfile" class="profile-button">
           프로필 변경
         </button>
@@ -104,7 +105,8 @@ const resetForm = () => {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: #e5e7eb;
+  background-color: white;
+  border: 1px solid rgb(62, 59, 59);
 }
 
 .form-title {

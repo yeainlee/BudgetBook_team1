@@ -3,8 +3,8 @@ import MainPage from '../views/MainPage.vue';
 // import TransactionPage from '../views/TransactionPage.vue';
 import TransactionEditPage from '../views/TransactionEditPage.vue';
 import MyPage from '../views/MyPage.vue';
-// import LoginPage from '../views/LoginPage.vue';
-// import JoinPage from '../views/JoinPage.vue';
+import LoginPage from '../views/LoginPage.vue';
+import JoinPage from '../views/JoinPage.vue';
 // import { useUserStore } from '@/store/userStore';
 
 const routes = [
@@ -36,18 +36,18 @@ const routes = [
     component: MyPage,
     // meta: { requiresAuth: true },
   },
-  // {
-  //   path: '/login',
-  //   name: 'LoginPage',
-  //   component: LoginPage,
-  //   // meta: { requiresAuth: false },
-  // },
-  // {
-  //   path: '/join',
-  //   name: 'JoinPage',
-  //   component: JoinPage,
-  // meta: { requiresAuth: false },
-  // },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage,
+    // meta: { requiresAuth: false },
+  },
+  {
+    path: '/join',
+    name: 'JoinPage',
+    component: JoinPage,
+    meta: { requiresAuth: false },
+  },
 ];
 
 const router = createRouter({
