@@ -56,29 +56,16 @@ onMounted(async () => {
   // chart.js 구성
   const data = {
     labels,
-<<<<<<< HEAD
-    datasets : [
-        {
-        label : '카테고리별 지출',
-        data : dataValues,
-        backgroundColor : blueSet,
-        borderColor : '#fff',
-        borderWidth : 1
-        }
-    ]
-}
-=======
     datasets: [
       {
         label: '카테고리별 지출',
         data: dataValues,
         backgroundColor: blueSet,
-        borderColor: '#fff'
+        borderColor: '#fff',
         borderWidth: 1,
       },
     ],
   };
->>>>>>> a188ac0 (fix-dashboard : 콤마 추가)
 
   const options = {
     responsive: true,
