@@ -65,7 +65,9 @@ const handleLogin = async () => {
       <p v-if="errorMessage" class="error-msg">{{ errorMessage }}</p>
 
       <!-- 로그인 버튼 -->
-      <button type="submit">SIGN IN</button>
+      <button type="submit" :disabled="userStore.loading">
+        {{ userStore.loading ? 'Signing in...' : 'SIGN IN' }}
+      </button>
 
       <!-- 회원가입 버튼 -->
       <p class="signup-text">
@@ -114,5 +116,10 @@ button {
 }
 button:hover {
   background-color: #81d4fa;
+}
+button:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
 }
 </style>

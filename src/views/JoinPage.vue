@@ -1,5 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore';
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const userId = ref('');
 const password = ref('');
@@ -7,6 +12,9 @@ const confirmPassword = ref('');
 const name = ref('');
 const email = ref('');
 const phone = ref('');
+
+// 중복 확인 여부 상태 변수
+const isIdChecked = ref(false);
 
 // 에러 메시지 변수
 const userIdError = ref('');
@@ -29,7 +37,7 @@ const isValidPhone = (phone) => {
 };
 
 // 회원가입 처리
-const handleSubmit = () => {
+const handleSubmit = async () => {
   // 에러 초기화
   userIdError.value = '';
   passwordError.value = '';
@@ -88,16 +96,63 @@ const handleSubmit = () => {
     hasError = true;
   }
 
+  // 유효성 검사 실패 시 종료
   if (hasError) return;
 
-  // 임시 성공 처리
-  console.log('✅ 회원가입 성공!');
-  console.log('아이디 : ', userId.value);
-  console.log('이름 : ', name.value);
-  console.log('이메일 : ', email.value);
-  console.log('휴대폰 번호 : ', phone.value);
-  alert('회원가입이 완료되었습니다!');
+  if (!isIdChecked.value) {
+    userIdError.value = '아이디 중복 확인을 해주세요.';
+    return;
+  }
+
+  //회원 정보 객체
+  const newUser = {
+    id: userId.value,
+    password: password.value,
+    name: name.value,
+    email: email.value,
+    phone: phone.value,
+  };
+
+  try {
+    // userStore의 createUser 호출
+    await userStore.createUser(newUser);
+    // 임시 성공 처리
+    console.log('✅ 회원가입 성공!');
+    console.log('아이디 : ', userId.value);
+    console.log('이름 : ', name.value);
+    console.log('이메일 : ', email.value);
+    console.log('휴대폰 번호 : ', phone.value);
+    alert('회원가입이 완료되었습니다!');
+
+    // 회원가입 후 로그인 페이지로 이동
+    router.push('/login');
+  } catch (err) {
+    console.error('회원가입 중 오류 발생', err);
+  }
 };
+
+// 아이디 중복 확인 함수
+const checkDuplicate = async () => {
+  if (!userId.value) {
+    userIdError.value = '아이디를 입력한 후 중복 확인해주세요.';
+    return;
+  }
+  // userStore의 checkDuplicate 호출
+  const isDuplicate = await userStore.checkIdDuplicate(userId.value);
+
+  if (isDuplicate) {
+    userIdError.value = '이미 사용 중인 아이디입니다.';
+    isIdChecked.value = false;
+  } else {
+    userIdError.value = '사용 가능한 아이디입니다.';
+    isIdChecked.value = true;
+  }
+};
+
+//아이디가 바뀌면 중복 확인 상태 초기화
+watch(userId, () => {
+  isIdChecked.value = false;
+});
 </script>
 
 <template>
@@ -117,6 +172,14 @@ const handleSubmit = () => {
           placeholder="아이디를 입력하세요"
           required
         />
+        <!-- 아이디 중복 확인 버튼 -->
+        <button
+          type="button"
+          @click="checkDuplicate"
+          :disabled="userStore.loading"
+        >
+          중복 확인
+        </button>
         <p v-if="userIdError" class="error">{{ userIdError }}</p>
       </div>
 
@@ -133,7 +196,7 @@ const handleSubmit = () => {
         <p v-if="passwordError" class="error">{{ passwordError }}</p>
       </div>
 
-      <!-- 비밀번호 확인인 입력 -->
+      <!-- 비밀번호 확인 입력 -->
       <div class="input-group">
         <label for="confirmPassword">비밀번호 확인</label>
         <input
@@ -188,7 +251,9 @@ const handleSubmit = () => {
       </div>
 
       <!-- 회원가입 버튼 -->
-      <button type="submit">회원가입</button>
+      <button type="submit" :disabled="userStore.loading">
+        {{ userStore.loading ? '가입 중...' : '회원가입' }}
+      </button>
     </form>
   </div>
 </template>
@@ -236,7 +301,22 @@ button {
   transition: background-color 0.3s;
 }
 
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 button:hover {
   background-color: #64b5f6;
+}
+
+.input-group button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #64b5f6;
+  color: white;
+  cursor: pointer;
 }
 </style>
