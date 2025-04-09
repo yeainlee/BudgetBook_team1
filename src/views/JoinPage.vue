@@ -382,6 +382,7 @@ button:hover {
   height: auto;
   line-height: 1;
 }
+/* eye-button hover 했을 때 파란색 background 제거 */
 .eye-button:focus,
 .eye-button:hover {
   outline: none;
