@@ -13,8 +13,16 @@ const name = ref('');
 const email = ref('');
 const phone = ref('');
 
+// 중복 확인 버튼 focus맞추기 위한 변수
+const checkButtonRef = ref(null);
+
 // 중복 확인 여부 상태 변수
 const isIdChecked = ref(false);
+
+// 비밀번호 보기 상태
+const showPassword = ref(false);
+// 비밀번호 확인 보기 상태
+const showConfirmPassword = ref(false);
 
 // 에러 메시지 변수
 const userIdError = ref('');
@@ -101,6 +109,8 @@ const handleSubmit = async () => {
 
   if (!isIdChecked.value) {
     userIdError.value = '아이디 중복 확인을 해주세요.';
+    // 버튼에 포커스 이동동
+    checkButtonRef.value?.focus();
     return;
   }
 
@@ -174,7 +184,9 @@ watch(userId, () => {
         />
         <!-- 아이디 중복 확인 버튼 -->
         <button
+          ref="checkButtonRef"
           type="button"
+          class="check-button"
           @click="checkDuplicate"
           :disabled="userStore.loading"
         >
@@ -186,26 +198,44 @@ watch(userId, () => {
       <!-- 비밀번호 입력 -->
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input
-          id="password"
-          v-model="password"
-          type="password"
-          placeholder="비밀번호를 입력하세요"
-          required
-        />
+        <div class="password-wrapper">
+          <input
+            id="password"
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="비밀번호를 입력하세요"
+            required
+          />
+          <button
+            type="button"
+            class="eye-button"
+            @click="showPassword = !showPassword"
+          >
+            {{ showPassword ? '🙈' : '👁️' }}
+          </button>
+        </div>
         <p v-if="passwordError" class="error">{{ passwordError }}</p>
       </div>
 
       <!-- 비밀번호 확인 입력 -->
       <div class="input-group">
         <label for="confirmPassword">비밀번호 확인</label>
-        <input
-          id="confirmPassword"
-          v-model="confirmPassword"
-          type="password"
-          placeholder="비밀번호를 다시 입력하세요"
-          required
-        />
+        <div class="password-wrapper">
+          <input
+            id="confirmPassword"
+            v-model="confirmPassword"
+            :type="showConfirmPassword ? 'text' : 'password'"
+            placeholder="비밀번호를 다시 입력하세요"
+            required
+          />
+          <button
+            type="button"
+            class="eye-button"
+            @click="showConfirmPassword = !showConfirmPassword"
+          >
+            {{ showConfirmPassword ? '🙈' : '👁️' }}
+          </button>
+        </div>
         <p v-if="confirmPasswordError" class="error">
           {{ confirmPasswordError }}
         </p>
@@ -318,5 +348,38 @@ button:hover {
   background-color: #64b5f6;
   color: white;
   cursor: pointer;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 2.5rem; /* 아이콘 공간 확보 */
+}
+.check-button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #64b5f6;
+  color: white;
+  cursor: pointer;
+}
+
+.eye-button {
+  all: unset; /* 버튼의 모든 기본 스타일 제거거 */
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  width: auto;
+  height: auto;
+  line-height: 1;
 }
 </style>

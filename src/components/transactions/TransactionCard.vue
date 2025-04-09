@@ -1,42 +1,47 @@
 <script setup>
-import {defineProps, defineEmits} from 'vue'
+import { defineProps, defineEmits } from 'vue';
 import { useTransactionStore } from '@/store/transactionStore';
 import router from '@/router';
 
-const props = defineProps ({
-    transaction: {
-        type: Object,
-        required: true
-    }
-})
+const props = defineProps({
+  transaction: {
+    type: Object,
+    required: true,
+  },
+});
 
-const store = useTransactionStore()
+const store = useTransactionStore();
 
 // 휴지통(삭제 버튼) 함수
 const handleDelete = async () => {
-    try {
-        await store.deleteTransaction(props.transaction.id)
-    } catch (err) {
-        console.error('삭제 실패: ', err)
-    }
-}
+  try {
+    await store.deleteTransaction(props.transaction.id);
+  } catch (err) {
+    console.error('삭제 실패: ', err);
+  }
+};
 
 // 각각의 거래 내역 클릭 시 거래 내역 수정 페이지로 이동
 const goToEditPage = () => {
-    router.push({name: 'TransactionEditPage', params: {id: props.transaction.id}})
-}
-
+  router.push({
+    name: 'TransactionEditPage',
+    params: { id: props.transaction.id },
+  });
+};
 </script>
 
 <template>
-    <div class="transaction-card" @click="goToEditPage">
-        <span class="date">{{ store.formatDate(transaction.date) }}</span>
-        <span class="desc">{{ transaction.desc || '-' }}</span>
-        <span class="price" :class="transaction.type === 'income' ? 'income' : 'outcome'">
-            ₩{{ transaction.price.toLocaleString() }}
-        </span>
-        <i class="fa-solid fa-trash-can delete-icon" @click.stop="handleDelete"></i>
-    </div>
+  <div class="transaction-card" @click="goToEditPage">
+    <span class="date">{{ store.formatDate(transaction.date) }}</span>
+    <span class="desc">{{ transaction.desc || '-' }}</span>
+    <span
+      class="price"
+      :class="transaction.type === 'income' ? 'income' : 'outcome'"
+    >
+      ₩{{ transaction.price.toLocaleString() }}
+    </span>
+    <i class="fa-solid fa-trash-can delete-icon" @click.stop="handleDelete"></i>
+  </div>
 </template>
 
 <style scoped>
@@ -72,6 +77,6 @@ const goToEditPage = () => {
 }
 
 .delete-icon:hover {
-  color: #E7EFFE;
+  color: #e7effe;
 }
 </style>
