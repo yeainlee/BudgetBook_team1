@@ -14,6 +14,14 @@ export const useUserStore = defineStore('user', () => {
     const loading = ref(false) // 로딩 중 여부
     const error = ref(null) // 에러 메시지 저장
 
+    // 상태 복원
+    const savedUser = localStorage.getItem('user')
+    const savedLoginStatus = localStorage.getItem('isLoggedIn')
+    if (savedUser && savedLoginStatus === 'true') {
+        user.value = JSON.parse(savedUser)
+        isLoggedIn.value = true
+    }
+
     // actions
     // 특정 사용자 정보 조회 (GET)
     async function getUserById(id) {
@@ -83,6 +91,11 @@ export const useUserStore = defineStore('user', () => {
                 user.value = response.data[0]
                 isLoggedIn.value = true
                 toastStore.showToast('로그인 성공', 'success')
+
+                // 로그인 성공 시 상태 저장
+                localStorage.setItem('user', JSON.stringify(user.value))
+                localStorage.setItem('isLoggedIn', 'true')
+
                 return true
             } else {
                 throw new Error('로그인 실패: 아이디/비밀번호 불일치')
@@ -122,6 +135,8 @@ export const useUserStore = defineStore('user', () => {
         const toastStore = useToastStore()
         user.value = null
         isLoggedIn.value = false
+        localStorage.removeItem('user') // 상태 제거
+        localStorage.removeItem('isLoggedIn') // 상태 제거
         toastStore.showToast('로그아웃 되었습니다.', 'info')
     }
 
