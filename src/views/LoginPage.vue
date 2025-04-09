@@ -53,7 +53,7 @@ const handleLogin = async () => {
       <!-- 비밀번호 입력칸 -->
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <password-wrapper>
+        <div class="password-wrapper">
           <input
             id="password"
             v-model="password"
@@ -68,7 +68,7 @@ const handleLogin = async () => {
           >
             {{ showPassword ? '🙈' : '👁️' }}
           </button>
-        </password-wrapper>
+        </div>
       </div>
 
       <!-- 에러 메시지 표시 -->
