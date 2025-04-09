@@ -340,7 +340,7 @@ button:hover {
   background-color: #64b5f6;
 }
 
-.input-group button {
+.input-group button:not(.eye-button) {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
