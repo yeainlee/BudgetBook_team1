@@ -13,6 +13,9 @@ const name = ref('');
 const email = ref('');
 const phone = ref('');
 
+// 중복 확인 버튼 focus맞추기 위한 변수
+const checkButtonRef = ref(null);
+
 // 중복 확인 여부 상태 변수
 const isIdChecked = ref(false);
 
@@ -101,6 +104,8 @@ const handleSubmit = async () => {
 
   if (!isIdChecked.value) {
     userIdError.value = '아이디 중복 확인을 해주세요.';
+    // 버튼에 포커스 이동동
+    checkButtonRef.value?.focus();
     return;
   }
 
@@ -174,6 +179,7 @@ watch(userId, () => {
         />
         <!-- 아이디 중복 확인 버튼 -->
         <button
+          ref="checkButtonRef"
           type="button"
           @click="checkDuplicate"
           :disabled="userStore.loading"
