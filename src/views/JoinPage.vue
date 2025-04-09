@@ -382,4 +382,10 @@ button:hover {
   height: auto;
   line-height: 1;
 }
+.eye-button:focus,
+.eye-button:hover {
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+}
 </style>
