@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useUserStore } from '@/store/userStore';
+import { useTransactionStore } from '@/store/transactionStore';
 
 // 차트 색상 지정
 const blueLight = 'rgba(173, 216, 230, 0.85)';
@@ -11,28 +12,32 @@ const border = 'rgba(0, 0, 0, 0.05)';
 
 // userID 받아오기
 const userStore = useUserStore();
-const userId = userStore.user?.id;
-
+const transactionStore = useTransactionStore();
 const chartRef = ref(null);
 let chartInstance = null;
 
+// 로그인 + 거래 데이터 가져오기
 onMounted(async () => {
-  //   기본 URL 설정
-  const api = axios.create({
-    baseURL: 'http://localhost:3000',
-  });
-  const res = await api.get(`/users/${userId}/trade_list`);
-  const trades = res.data;
+  if (!userStore.user || !userStore.user.id) return;
+
+  await transactionStore.fetchTransactions(userStore.user.id);
+  const trades = transactionStore.transactions;
 
   // 월별 수입/지출 계산
   const monthly = {};
 
   trades.forEach((tx) => {
     const month = tx.date.slice(0, 7);
+    const type = tx.type;
+    const price = Number(tx.price);
+
+    if (!['income', 'outcome'].includes(type)) return;
+    if (isNaN(price) || price <= 0) return;
+
     if (!monthly[month]) {
       monthly[month] = { income: 0, outcome: 0 };
     }
-    monthly[month][tx.type] += tx.price;
+    monthly[month][type] += Number(price);
   });
 
   const sortedMonths = Object.keys(monthly).sort();
@@ -46,7 +51,7 @@ onMounted(async () => {
       {
         label: '수입',
         data: incomeData,
-        backgroundColor: blueMid,
+        backgroundColor: blueLight,
         borderColor: border,
         borderWidth: 1,
         borderRadius: 4,
@@ -68,19 +73,26 @@ onMounted(async () => {
       legend: { position: 'bottom', labels: { color: '#333' } },
       tooltip: { enabled: true },
     },
+    layout: {
+      padding: {
+        top: 10,
+        bottom: 10,
+      },
+    },
     scales: {
       x: {
-        ticks: { color: '#333' },
+        ticks: { color: '#333', font: { size: 12 } },
         grid: { display: false },
       },
       y: {
         beginAtZero: true,
-        ticks: { color: '#333' },
+        ticks: { color: '#333', font: { size: 12 } },
         grid: { color: border },
       },
     },
   };
 
+  // 차트 랜더링
   const ctx = chartRef.value.getContext('2d');
   if (chartInstance) chartInstance.destroy();
   chartInstance = new window.Chart(ctx, {
@@ -92,14 +104,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h2>월별 통계 차트</h2>
   <h3>월별 수입/지출 비교</h3>
   <canvas ref="chartRef"></canvas>
 </template>
 
 <style scoped>
 canvas {
-  width: 100%;
-  height: 320px;
+  width: 80%;
+  max-width: 100%;
+  max-height: 400px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 </style>
