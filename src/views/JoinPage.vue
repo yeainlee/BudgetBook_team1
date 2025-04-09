@@ -368,6 +368,7 @@ button:hover {
 }
 
 .eye-button {
+  all: unset; /* 버튼의 모든 기본 스타일 제거거 */
   position: absolute;
   top: 50%;
   right: 0.5rem;
@@ -375,7 +376,7 @@ button:hover {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
   padding: 0;
   width: auto;
   height: auto;
