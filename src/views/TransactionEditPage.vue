@@ -2,13 +2,19 @@
 import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
+import { useUserStore } from '@/store/userStore'; //피니아에서 유저 스토어 가져옴
+import { useToastStore } from '@/store/toastStore'; //  토스트스토어 추가
+import ToastMessage from '@/components/ToastNotification.vue'; // 토스트
 
 const route = useRoute(); //현재 라우팅 정보
 const router = useRouter(); //이동 기능
+const toastStore = useToastStore(); // 토스트
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
-const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
+//const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
+const userStore = useUserStore();
+const userId = userStore.user?.id;
 
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
@@ -19,7 +25,7 @@ const categoryList = ref([]); //카테 목록
 
 const fetchCategories = async () => {
   const { data } = await axios.get(`/category?type=${type.value}`);
-  console.log('📦 받아온 카테고리 목록:', data); //콘솔창 확인용 -추가
+  console.log('받아온 카테고리 목록:', data); //콘솔창 확인용 -추가
   categoryList.value = data;
 }; //type(수입/지출)에 따라 맞는 카테고리 떙김
 
@@ -34,7 +40,32 @@ const fetchTrade = async () => {
   desc.value = data.desc;
   await fetchCategories();
 }; //수정일 때 기존 데이터 떙김
+const handleCancel = () => {
+  toastStore.showToast('취소되었습니다.', 'info');
+  setTimeout(() => {
+    router.back(); // 이전 페이지로 이동
+  }, 1500); // 토스트 잠깐 보여주고 이동 (1.5초 후)
+};
+// const handleSubmit = async () => {
+//   const payload = {
+//     userid: userId,
+//     type: type.value,
+//     date: date.value,
+//     price: Number(price.value),
+//     categoryId: Number(categoryId.value),
+//     desc: desc.value,
+//   };
 
+//   if (isEdit.value) {
+//     await axios.patch(`/trade_list/${tradeId}`, payload);
+//   } else {
+//     await axios.post(`/trade_list`, payload);
+//   }
+//   toastStore.showToast('저장되었습니다.', 'info');
+//   setTimeout(() => {
+//     router.push('/transactions');
+//   }, 3000); // 토스트 잠깐 보여주고 이동 (3초 후)
+// }; //저장누르면 실행
 const handleSubmit = async () => {
   const payload = {
     userid: userId,
@@ -45,14 +76,23 @@ const handleSubmit = async () => {
     desc: desc.value,
   };
 
-  if (isEdit.value) {
-    await axios.patch(`/trade_list/${tradeId}`, payload);
-  } else {
-    await axios.post(`/trade_list`, payload);
-  }
+  try {
+    if (isEdit.value) {
+      await axios.patch(`/trade_list/${tradeId}`, payload);
+    } else {
+      await axios.post(`/trade_list`, payload);
+    }
 
-  router.push('/transactions'); //저장 후 거래목록 페이지로 이동
-}; //저장누르면 실행
+    toastStore.showToast('저장되었습니다.', 'success');
+    // 토스트 다 보이고 이동
+    setTimeout(() => {
+      router.push('/transactions');
+    }, 2000);
+  } catch (error) {
+    console.error('저장 실패:', error);
+    toastStore.showToast('저장에 실패했습니다.', 'error');
+  }
+};
 
 const handleDelete = async () => {
   if (confirm('정말 삭제하시겠습니까?')) {
@@ -64,9 +104,9 @@ const handleDelete = async () => {
 onMounted(() => {
   isEdit.value ? fetchTrade() : fetchCategories(); //참이면 앞놈 거짓이면 뒷놈
 });
-//컴포넌트가 화면에 나타날 때 실행할 코드를 정의
+// 컴포넌트가 화면에 나타날 때 실행할 코드를 정의
 // 여기서는 isEdit 값에 따라 다른 함수를 호출
-//수정 - 기존 거래 / 신규 - 캐테고리 목록
+// 수정 - 기존 거래 / 신규 - 캐테고리 목록
 </script>
 
 <template>
@@ -130,11 +170,12 @@ onMounted(() => {
     <br />
     <!-- 버튼 -->
     <div class="button-row">
-      <button class="cancel" @click="router.back()">취소</button>
+      <button class="cancel" @click="handleCancel">취소</button>
       <button class="submit" @click="handleSubmit">저장</button>
       <button v-if="isEdit" class="delete" @click="handleDelete">삭제</button>
     </div>
   </div>
+  <ToastMessage />
 </template>
 
 <style scoped>
