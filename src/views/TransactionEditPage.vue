@@ -9,12 +9,13 @@ import ToastMessage from '@/components/ToastNotification.vue'; // 토스트
 const route = useRoute(); //현재 라우팅 정보
 const router = useRouter(); //이동 기능
 const toastStore = useToastStore(); // 토스트
+const userStore = useUserStore();
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
-//const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
-const userStore = useUserStore();
-const userId = userStore.user?.id;
+
+const userId = localStorage.getItem('userId');
+console.log('✅ 현재 로그인된 userId:', userId);
 
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
@@ -40,6 +41,7 @@ const fetchTrade = async () => {
   desc.value = data.desc;
   await fetchCategories();
 }; //수정일 때 기존 데이터 떙김
+
 const handleCancel = () => {
   toastStore.showToast('취소되었습니다.', 'info');
   setTimeout(() => {
@@ -56,6 +58,10 @@ const handleSubmit = async () => {
     categoryId: Number(categoryId.value),
     desc: desc.value,
   };
+
+  // ✅ 여기서 확인
+  console.log('✅ userId 타입 및 값:', typeof userId, userId);
+  console.log('✅ payload 확인:', payload);
 
   try {
     if (isEdit.value) {

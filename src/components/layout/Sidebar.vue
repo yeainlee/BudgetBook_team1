@@ -32,6 +32,11 @@ const route = useRoute();
 const userStore = useUserStore(); // Pinia 스토어 사용
 console.log(userStore.isLoggedIn);
 
+// 사용자 이름 표시 (로그인된 상태면 사용자 이름, 아니면 기본값)
+const userName = computed(() =>
+  userStore.isLoggedIn && userStore.user ? userStore.user.id : null
+);
+
 // 메뉴 아이템 정의
 const menuItems = [
   {
