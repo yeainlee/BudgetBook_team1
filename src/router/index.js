@@ -31,11 +31,13 @@ const routes = [
     path: '/transaction/edit',
     name: 'TransactionEditNew',
     component: TransactionEditPage,
+    meta: { requiresAuth: true },
   },
   {
     path: '/transaction/edit/:id',
     name: 'TransactionEditPage',
     component: () => import('@/views/TransactionEditPage.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/my',
@@ -72,7 +74,11 @@ router.beforeEach((to, from, next) => {
     next({ name: 'LoginPage' }); // 로그인 페이지로 리다이렉트
   }
   // 이미 로그인된 상태에서 로그인/회원가입 페이지로 가려는 경우
-  else if (!to.meta.requiresAuth && isLoggedIn && (to.name === 'LoginPage' || to.name === 'JoinPage')) {
+  else if (
+    !to.meta.requiresAuth &&
+    isLoggedIn &&
+    (to.name === 'LoginPage' || to.name === 'JoinPage')
+  ) {
     next({ name: 'MainPage' }); // 메인 페이지로 리다이렉트
   } else {
     next(); // 정상적으로 라우팅 계속 진행

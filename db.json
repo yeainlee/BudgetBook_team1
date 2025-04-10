@@ -76,7 +76,43 @@
   ],
   "trade_list": [
     {
+      "id": "a1",
+      "categoryId": 4,
+      "price": 15000,
+      "type": "outcome",
+      "date": "2025-04-10",
+      "desc": "점심 식사",
+      "userid": "tokkaeng"
+    },
+    {
       "id": "a2",
+      "categoryId": 4,
+      "price": 8500,
+      "type": "outcome",
+      "date": "2025-04-09",
+      "desc": "저녁 식사",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a3",
+      "categoryId": 7,
+      "price": 89000,
+      "type": "outcome",
+      "date": "2025-04-08",
+      "desc": "새 신발 구매",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a4",
+      "categoryId": 6,
+      "price": 14900,
+      "type": "outcome",
+      "date": "2025-04-07",
+      "desc": "넷플릭스 구독",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a5",
       "categoryId": 4,
       "price": 5000,
       "type": "outcome",
@@ -85,7 +121,16 @@
       "userid": "tokkaeng"
     },
     {
-      "id": "a3",
+      "id": "a6",
+      "categoryId": 4,
+      "price": 5000,
+      "type": "outcome",
+      "date": "2025-04-06",
+      "desc": "커피",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a7",
       "categoryId": 3,
       "price": 50000,
       "type": "income",
@@ -95,16 +140,25 @@
       "userid": "tokkaeng"
     },
     {
-      "id": "a4",
+      "id": "a8",
+      "categoryId": 8,
+      "price": 35000,
+      "type": "outcome",
+      "date": "2025-04-05",
+      "desc": "영화 관람",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a9",
       "categoryId": 1,
       "price": 44444,
       "type": "income",
       "date": "2025-04-04",
-      "desc": "",
+      "desc": "부업 수입",
       "userid": "tokkaeng"
     },
     {
-      "id": "a5",
+      "id": "a10",
       "categoryId": 5,
       "price": 5800,
       "type": "outcome",
@@ -113,7 +167,25 @@
       "userid": "tokkaeng"
     },
     {
-      "id": "a6",
+      "id": "a11",
+      "categoryId": 5,
+      "price": 2500,
+      "type": "outcome",
+      "date": "2025-04-03",
+      "desc": "지하철",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a12",
+      "categoryId": 7,
+      "price": 127000,
+      "type": "outcome",
+      "date": "2025-04-02",
+      "desc": "의류 구매",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a13",
       "categoryId": 2,
       "price": 35000,
       "type": "income",
@@ -122,22 +194,94 @@
       "userid": "tokkaeng"
     },
     {
-      "id": "a7",
+      "id": "a14",
       "categoryId": 1,
-      "price": 2000000,
+      "price": 2800000,
       "type": "income",
       "date": "2025-04-01",
-      "desc": "KB 월급",
-      "userid": "tokkaeng1"
+      "desc": "월급",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a15",
+      "categoryId": 6,
+      "price": 9900,
+      "type": "outcome",
+      "date": "2025-04-01",
+      "desc": "유튜브 프리미엄",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a16",
+      "categoryId": 9,
+      "price": 150000,
+      "type": "income",
+      "date": "2025-03-28",
+      "desc": "주식 배당금",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a17",
+      "categoryId": 8,
+      "price": 68000,
+      "type": "outcome",
+      "date": "2025-03-26",
+      "desc": "콘서트 티켓",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a18",
+      "categoryId": 4,
+      "price": 75000,
+      "type": "outcome",
+      "date": "2025-03-25",
+      "desc": "외식",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a19",
+      "categoryId": 10,
+      "price": 500000,
+      "type": "income",
+      "date": "2025-03-20",
+      "desc": "분기 성과급",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a20",
+      "categoryId": 7,
+      "price": 250000,
+      "type": "outcome",
+      "date": "2025-03-15",
+      "desc": "전자기기 구매",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a21",
+      "categoryId": 1,
+      "price": 2800000,
+      "type": "income",
+      "date": "2025-03-01",
+      "desc": "월급",
+      "userid": "tokkaeng"
+    },
+    {
+      "id": "a22",
+      "categoryId": 11,
+      "price": 100000,
+      "type": "income",
+      "date": "2025-04-10",
+      "desc": "생일 축하 용돈",
+      "userid": "tokkaeng"
     },
     {
       "id": "199c",
       "userid": "tokkaeng",
       "type": "income",
       "date": "2025-04-19",
-      "price": 20000000,
+      "price": 5000000,
       "categoryId": 1,
-      "desc": "간식비222222222"
+      "desc": "특별 보너스"
     }
   ]
 }

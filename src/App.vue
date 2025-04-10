@@ -1,6 +1,13 @@
 <script setup>
 import Sidebar from './components/layout/Sidebar.vue';
 import Header from './components/layout/Header.vue';
+// import {onMounted} from 'vue';
+
+// const useUserStore from '@/store/'
+
+// onMounted(() => {
+//   useUserStore.initializeStore();
+// });
 </script>
 
 <template>
@@ -18,5 +25,5 @@ import Header from './components/layout/Header.vue';
         <router-view />
       </section>
     </main>
-    </div>
+  </div>
 </template>
