@@ -27,7 +27,6 @@ const handleLogin = async () => {
       router.push('/main');
     }
   } catch (err) {
-    console.log('###');
     errorMessage.value = err.message || '로그인에 실패했습니다.';
   }
 };
