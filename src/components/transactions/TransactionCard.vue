@@ -51,19 +51,19 @@ const goToEditPage = () => {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--light-color);
 }
 
 .date {
   flex: 1;
   font-size: 14px;
-  color: #888;
+  color: var(--light-text);
 }
 
 .desc {
   flex: 2;
   font-size: 16px;
-  color: #333;
+  color: var(--dark-text);
 }
 
 .price {
@@ -78,6 +78,6 @@ const goToEditPage = () => {
 }
 
 .delete-icon:hover {
-  color: #e7effe;
+  color: var(--light-color);
 }
 </style>

@@ -10,7 +10,6 @@ const route = useRoute(); //현재 라우팅 정보
 const router = useRouter(); //이동 기능
 const toastStore = useToastStore(); // 토스트
 const userStore = useUserStore();
-const formattedPrice = ref('');
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
@@ -21,7 +20,7 @@ console.log('✅ 현재 로그인된 userId:', userId);
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
 const price = ref(0); //돈
-const categoryId = ref(''); //카테괼 아이디
+const categoryId = ref(''); //카테고리 아이디
 const desc = ref(''); //사용하는놈이 쓴 내용
 const categoryList = ref([]); //카테 목록
 
@@ -73,7 +72,7 @@ const handleSubmit = async () => {
 
     toastStore.showToast('저장되었습니다.', 'success');
     setTimeout(() => {
-      router.push('/transaction');
+      router.push('/transactions');
     }, 2000);
   } catch (error) {
     console.error('저장 실패:', error);
@@ -87,18 +86,6 @@ const handleDelete = async () => {
     router.push('/transactions');
   }
 }; //삭제
-
-// 숫자(price)가 바뀌면 formattedPrice도 쉼표 포함된 문자열로 자동 갱신
-watch(price, (newPrice) => {
-  formattedPrice.value = newPrice.toLocaleString();
-});
-
-// 입력한 문자열을 숫자로 변환해서 price에 저장
-const handlePriceInput = (event) => {
-  const rawValue = event.target.value.replace(/,/g, ''); // , 제거
-  const numericValue = Number(rawValue); //문자열 숫자로 변환
-  price.value = isNaN(numericValue) ? 0 : numericValue; //숫자아니면 0, 숫자면 저장
-};
 
 onMounted(() => {
   isEdit.value ? fetchTrade() : fetchCategories(); //참이면 앞놈 거짓이면 뒷놈
@@ -137,11 +124,10 @@ onMounted(() => {
     <div class="input M-input">
       <span class="currency">₩</span>
       <input
-        type="text"
+        type="number"
         id="inputmoney"
         class="form-control"
-        :value="formattedPrice"
-        @input="handlePriceInput"
+        v-model="price"
       />
     </div>
     <br />
@@ -184,7 +170,7 @@ onMounted(() => {
 }
 .M-input {
   position: relative;
-  width: 500px;
+  width: 900px;
   margin: 0 auto;
 }
 .M-input .currency {
@@ -203,47 +189,64 @@ onMounted(() => {
   font-weight: 550;
   font-family: inherit;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   text-align: right;
 }
 .form-label {
-  color: rgba(0, 0, 0, 0.5);
-  padding: 30px;
+  color: black;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  display: block;
 }
 .form-control {
   padding: 1px 20px;
-  width: 500px;
+  width: 900px;
   height: 60px;
   font-weight: 550;
   font-family: inherit;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 .edit-page {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 1000px;
+  margin: 5rem auto;
+  padding: 3rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .type-tab {
   display: flex;
   justify-content: center;
   gap: 6px;
-  margin-bottom: 16px;
 }
+
 .type-tab button {
+  flex: 1;
   display: flex;
-  padding: 10px 55px;
-  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  justify-content: center;
+  font-size: 1.2rem;
   border-radius: 50px;
-  background: #f0f0f0;
+  background: var(--light-color);
   font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 3rem;
 }
 
 .type-tab button.active {
-  background: #007bff;
-  color: white;
+  background: var(--button-color);
+  color: black;
+}
+
+.type-tab button p {
+  color: black;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .date-wrapper {
@@ -259,24 +262,27 @@ onMounted(() => {
 
 .button-row {
   display: flex;
-  padding: 6px;
+  padding: 10px;
   gap: 10px;
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 button.cancel {
-  background: #ddd;
+  background: var(--light-color);
   flex: 1;
+  font-size: 1rem;
+  margin: 0 1rem 0 0;
 }
 button.submit {
-  background: #007bff;
-  color: white;
+  background: var(--button-color);
+  font-size: 1rem;
+  color: black;
   flex: 1;
 }
 button.delete {
-  background: #b7e9fc;
-  color: white;
+  background: var(--red-color);
+  color: black;
   flex: 1;
 }
 button {
@@ -284,5 +290,6 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin: 0 2cqi 0 0;
 }
 </style>

@@ -69,13 +69,16 @@ const recentTransactions = computed(() =>
 /* 차트 스타일 */
 .main-container {
   display: flex;
+  height: 100%;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: stretch;
   gap: 1rem;
   padding: 1rem;
 }
 
 .chart-section {
-  flex: 2;
+  flex: 1;
 }
 
 .side-section {
@@ -90,16 +93,18 @@ const recentTransactions = computed(() =>
 }
 
 .tab-buttons button {
+  margin-top: 4rem;
   padding: 0.5rem 1rem;
-  background-color: #e8f4ff;
-  border: 1px solid #87cefa;
-  border-radius: 6px;
+  background-color: var(--light-color);
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  font-size: 1rem;
   cursor: pointer;
   font-weight: bold;
 }
 
 .tab-buttons button.active {
-  background-color: #81a9cb;
-  color: white;
+  background-color: var(--button-color);
+  color: black;
 }
 </style>

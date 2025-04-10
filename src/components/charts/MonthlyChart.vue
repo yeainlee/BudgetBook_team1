@@ -3,12 +3,13 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useUserStore } from '@/store/userStore';
 import { useTransactionStore } from '@/store/transactionStore';
+import '@/assets/main.css';
 
-// 차트 색상 지정
-const blueLight = 'rgba(173, 216, 230, 0.85)';
-const blueMid = 'rgba(100, 149, 237, 0.85)';
-const blueDark = 'rgba(70, 130, 180, 0.85)';
-const border = 'rgba(0, 0, 0, 0.05)';
+// 색상 코드 받아오기
+const rootStyle = getComputedStyle(document.documentElement);
+const blueLight = rootStyle.getPropertyValue('--blue-light').trim();
+const blueDark = rootStyle.getPropertyValue('--blue-dark').trim();
+const border = rootStyle.getPropertyValue('--border-color').trim();
 
 // userID 받아오기
 const userStore = useUserStore();
@@ -23,8 +24,12 @@ onMounted(async () => {
   await transactionStore.fetchTransactions(userStore.user.id);
   const trades = transactionStore.transactions;
 
+  const currentMonth = new Date().toISOString().slice(0, 7);
+
   // 월별 수입/지출 계산
-  const monthly = {};
+  const monthly = {
+    [currentMonth]: { income: 0, outcome: 0 },
+  };
 
   trades.forEach((tx) => {
     const month = tx.date.slice(0, 7);
@@ -40,7 +45,7 @@ onMounted(async () => {
     monthly[month][type] += Number(price);
   });
 
-  const sortedMonths = Object.keys(monthly).sort();
+  const sortedMonths = [currentMonth];
   const incomeData = sortedMonths.map((month) => monthly[month].income);
   const outcomeData = sortedMonths.map((month) => monthly[month].outcome);
 
@@ -69,6 +74,7 @@ onMounted(async () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: { position: 'bottom', labels: { color: '#333' } },
       tooltip: { enabled: true },
@@ -110,11 +116,10 @@ onMounted(async () => {
 
 <style scoped>
 canvas {
-  width: 80%;
-  max-width: 100%;
-  max-height: 400px;
+  width: 60%;
+  max-width: 1000px;
   height: auto;
-  display: block;
   margin: 0 auto;
+  display: block;
 }
 </style>

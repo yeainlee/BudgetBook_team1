@@ -34,7 +34,7 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/transaction/edit/:id',
+    path: '/transaction/edit',
     name: 'TransactionEditPage',
     component: () => import('@/views/TransactionEditPage.vue'),
     meta: { requiresAuth: true },

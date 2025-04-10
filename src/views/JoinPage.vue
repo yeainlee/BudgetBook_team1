@@ -168,167 +168,191 @@ watch(userId, () => {
 <template>
   <!-- <RouterView /> -->
   <!-- <ToastNotification /> -->
-
-  <div class="join-container">
-    <h1>CREATE ACCOUNT</h1>
-    <form @submit.prevent="handleSubmit" novalidate>
-      <!-- 아이디 입력 -->
-      <div class="input-group">
-        <label for="userId">아이디</label>
-        <input
-          id="userId"
-          v-model="userId"
-          type="text"
-          placeholder="아이디를 입력하세요"
-          required
-        />
-        <!-- 아이디 중복 확인 버튼 -->
-        <button
-          ref="checkButtonRef"
-          type="button"
-          class="check-button"
-          @click="checkDuplicate"
-          :disabled="userStore.loading"
-        >
-          중복 확인
+  <div class="join-page">
+    <div class="join-container-img">
+      <img src="../img/join.png" alt="join" />
+    </div>
+    <div class="join-container">
+      <h1>CREATE ACCOUNT</h1>
+      <form @submit.prevent="handleSubmit" novalidate>
+        <!-- 아이디 입력 -->
+        <div class="input-group">
+          <label for="userId">아이디</label>
+          <input
+            id="userId"
+            v-model="userId"
+            type="text"
+            placeholder="아이디를 입력하세요"
+            required
+          />
+          <!-- 아이디 중복 확인 버튼 -->
+          <button
+            ref="checkButtonRef"
+            type="button"
+            class="check-button"
+            @click="checkDuplicate"
+            :disabled="userStore.loading"
+          >
+            중복 확인
+          </button>
+          <p v-if="userIdError" class="error">{{ userIdError }}</p>
+        </div>
+        <!-- 비밀번호 입력 -->
+        <div class="input-group">
+          <label for="password">비밀번호</label>
+          <div class="password-wrapper">
+            <input
+              id="password"
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="비밀번호를 입력하세요"
+              required
+            />
+            <button
+              type="button"
+              class="eye-button"
+              @click="showPassword = !showPassword"
+            >
+              {{ showPassword ? '🙉' : '🙈' }}
+            </button>
+          </div>
+          <p v-if="passwordError" class="error">{{ passwordError }}</p>
+        </div>
+        <!-- 비밀번호 확인 입력 -->
+        <div class="input-group">
+          <label for="confirmPassword">비밀번호 확인</label>
+          <div class="password-wrapper">
+            <input
+              id="confirmPassword"
+              v-model="confirmPassword"
+              :type="showConfirmPassword ? 'text' : 'password'"
+              placeholder="비밀번호를 다시 입력하세요"
+              required
+            />
+            <button
+              type="button"
+              class="eye-button"
+              @click="showConfirmPassword = !showConfirmPassword"
+            >
+              {{ showConfirmPassword ? '🙉' : '🙈' }}
+            </button>
+          </div>
+          <p v-if="confirmPasswordError" class="error">
+            {{ confirmPasswordError }}
+          </p>
+        </div>
+        <!-- 이름 입력 -->
+        <div class="input-group">
+          <label for="name">이름</label>
+          <input
+            id="name"
+            v-model="name"
+            type="text"
+            placeholder="이름을 입력하세요"
+            required
+          />
+          <p v-if="nameError" class="error">{{ nameError }}</p>
+        </div>
+        <!-- 이메일 입력 -->
+        <div class="input-group">
+          <label for="email">이메일</label>
+          <input
+            id="email"
+            v-model="email"
+            type="email"
+            placeholder="이메일을 입력하세요"
+            required
+          />
+          <p v-if="emailError" class="error">{{ emailError }}</p>
+        </div>
+        <!-- 휴대폰 번호 입력 -->
+        <div class="input-group">
+          <label for="phone">휴대폰 번호</label>
+          <input
+            id="phone"
+            v-model="phone"
+            type="tel"
+            placeholder="010-0000-0000"
+            required
+          />
+          <p v-if="phoneError" class="error">{{ phoneError }}</p>
+        </div>
+        <!-- 회원가입 버튼 -->
+        <button type="submit" :disabled="userStore.loading">
+          {{ userStore.loading ? '가입 중...' : '회원가입' }}
         </button>
-        <p v-if="userIdError" class="error">{{ userIdError }}</p>
-      </div>
-
-      <!-- 비밀번호 입력 -->
-      <div class="input-group">
-        <label for="password">비밀번호</label>
-        <div class="password-wrapper">
-          <input
-            id="password"
-            v-model="password"
-            :type="showPassword ? 'text' : 'password'"
-            placeholder="비밀번호를 입력하세요"
-            required
-          />
-          <button
-            type="button"
-            class="eye-button"
-            @click="showPassword = !showPassword"
-          >
-            {{ showPassword ? '🙉' : '🙈' }}
-          </button>
-        </div>
-        <p v-if="passwordError" class="error">{{ passwordError }}</p>
-      </div>
-
-      <!-- 비밀번호 확인 입력 -->
-      <div class="input-group">
-        <label for="confirmPassword">비밀번호 확인</label>
-        <div class="password-wrapper">
-          <input
-            id="confirmPassword"
-            v-model="confirmPassword"
-            :type="showConfirmPassword ? 'text' : 'password'"
-            placeholder="비밀번호를 다시 입력하세요"
-            required
-          />
-          <button
-            type="button"
-            class="eye-button"
-            @click="showConfirmPassword = !showConfirmPassword"
-          >
-            {{ showConfirmPassword ? '🙉' : '🙈' }}
-          </button>
-        </div>
-        <p v-if="confirmPasswordError" class="error">
-          {{ confirmPasswordError }}
-        </p>
-      </div>
-
-      <!-- 이름 입력 -->
-      <div class="input-group">
-        <label for="name">이름</label>
-        <input
-          id="name"
-          v-model="name"
-          type="text"
-          placeholder="이름을 입력하세요"
-          required
-        />
-        <p v-if="nameError" class="error">{{ nameError }}</p>
-      </div>
-
-      <!-- 이메일 입력 -->
-      <div class="input-group">
-        <label for="email">이메일</label>
-        <input
-          id="email"
-          v-model="email"
-          type="email"
-          placeholder="이메일을 입력하세요"
-          required
-        />
-        <p v-if="emailError" class="error">{{ emailError }}</p>
-      </div>
-
-      <!-- 휴대폰 번호 입력 -->
-      <div class="input-group">
-        <label for="phone">휴대폰 번호</label>
-        <input
-          id="phone"
-          v-model="phone"
-          type="tel"
-          placeholder="010-0000-0000"
-          required
-        />
-        <p v-if="phoneError" class="error">{{ phoneError }}</p>
-      </div>
-
-      <!-- 회원가입 버튼 -->
-      <button type="submit" :disabled="userStore.loading">
-        {{ userStore.loading ? '가입 중...' : '회원가입' }}
-      </button>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .error {
-  color: red;
+  color: var(--red-color);
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
+.join-page {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+.join-container-img {
+  flex: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 60%;
+  height: auto;
+}
 .join-container {
-  max-width: 450px;
-  margin: 80px auto;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  flex: 1.4;
+  padding: 1rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .input-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: left;
   margin-bottom: 1rem;
 }
 
 input {
   width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #aaa;
-  border-radius: 6px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  color: white;
+  border-radius: 7px;
   font-size: 1rem;
 }
 
 button {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #90caf9;
-  color: #f0f0f0;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 0.4rem;
+  background-color: var(--light-color);
+  border: 1px solid var(--border-color);
+  color: black;
+  border-radius: 10px;
+  font-size: 1rem;
 }
 
 button[disabled] {
@@ -337,17 +361,21 @@ button[disabled] {
 }
 
 button:hover {
-  background-color: #64b5f6;
+  background-color: var(--button-color);
 }
 
 .input-group button:not(.eye-button) {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 4px;
-  background-color: #64b5f6;
-  color: white;
+  border-radius: 10px;
+  background-color: var(--light-color);
+  color: black;
   cursor: pointer;
+}
+
+.input-group button:hover {
+  background-color: var(--button-color);
 }
 
 .password-wrapper {
@@ -361,12 +389,11 @@ button:hover {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 4px;
-  background-color: #64b5f6;
-  color: white;
+  border-radius: 10px;
+  background-color: var(--button-color);
+  color: black;
   cursor: pointer;
 }
-
 .eye-button {
   all: unset; /* 버튼의 모든 기본 스타일 제거거 */
   position: absolute;

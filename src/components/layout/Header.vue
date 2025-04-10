@@ -1,17 +1,3 @@
-<template>
-  <header class="header">
-    <div class="welcome">
-      <h2>Welcome, {{ userName }}</h2>
-      <p>{{ currentDateFormatted }}</p>
-    </div>
-    <div class="search-notification">
-      <div class="notification">
-        <i class="fa-solid fa-bell"></i>
-      </div>
-    </div>
-  </header>
-</template>
-
 <script setup>
 import { computed } from 'vue';
 import { useUserStore } from '../../store/userStore';
@@ -34,9 +20,23 @@ const currentDateFormatted = computed(() => {
     month: 'long',
     year: 'numeric',
   };
-  return now.toLocaleDateString('en-US', options);
+  return now.toLocaleDateString('ko-KR', options);
 });
 </script>
+
+<template>
+  <header class="header">
+    <div class="welcome">
+      <h2>안녕하세요, {{ userName }}</h2>
+      <p>{{ currentDateFormatted }}</p>
+    </div>
+    <div class="search-notification">
+      <div class="notification">
+        <i class="fa-solid fa-bell"></i>
+      </div>
+    </div>
+  </header>
+</template>
 
 <style scoped>
 .header {
@@ -52,7 +52,7 @@ const currentDateFormatted = computed(() => {
 }
 
 .welcome p {
-  color: #888;
+  color: var(--light-text);
   font-size: 14px;
   margin-top: 4px;
 }
@@ -71,8 +71,8 @@ const currentDateFormatted = computed(() => {
   padding: 8px 16px;
   padding-left: 40px;
   border-radius: 20px;
-  border: 1px solid #eee;
-  background-color: #f9f9f9;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
   width: 250px;
   font-size: 14px;
 }
@@ -82,11 +82,11 @@ const currentDateFormatted = computed(() => {
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #888;
+  color: var(--light-text);
 }
 
 .notification {
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -97,6 +97,6 @@ const currentDateFormatted = computed(() => {
 }
 
 .notification i {
-  color: #888;
+  color: var(--light-text);
 }
 </style>

@@ -43,7 +43,7 @@ button {
   padding: 0;
   border-radius: 50%;
   background-color: var(--button-color);
-  border: 1px solid var(—border-color);
+  border: none;
   cursor: pointer;
 }
 </style>

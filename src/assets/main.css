@@ -4,6 +4,28 @@
   box-sizing: border-box;
 }
 
+:root {
+  --blue-light: rgba(173, 216, 230, 0.85);
+  --blue-mid: rgba(156, 177, 216, 0.85);
+  --blue-dark: rgba(70, 130, 180, 0.85);
+  --blue-soft: rgba(135, 206, 250, 0.85);
+  --blue-sky: rgba(30, 144, 255, 0.85);
+  --button-color: rgb(187, 224, 236);
+  --background-color: rgb(237, 248, 254);
+  --border-color: rgba(152, 152, 152, 0.5);
+  --light-text: rgb(136, 136, 136);
+  --dark-text: rgb(51, 51, 51);
+  --red-color: rgb(229, 57, 53);
+  --red-hover: rgba(229, 57, 53, 0.1);
+  --background: rgb(255, 255, 255);
+  --light-color: rgb(238, 238, 238);
+
+  /* 원래 sidebar 강조 색상 : #1e88e5 */
+  /* border로만 받아옴(지우기) */
+  /* 버튼 Borderradius 10px */
+  /* input 7px */
+}
+
 body {
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #f9f9f9;
@@ -22,7 +44,7 @@ body {
   gap: 20px;
   align-items: center;
   justify-content: center;
-  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 0 4px var(--border-color);
 }
 
 .icon {
@@ -34,7 +56,7 @@ body {
 
 .icon.active {
   opacity: 1;
-  background-color: #eef7ff;
+  background-color: var(--background-color);
   border-radius: 10px;
   padding: 8px;
 }
@@ -59,22 +81,22 @@ body {
 }
 
 .welcome p {
-  color: #888;
+  color: var(--light-text);
   font-size: 14px;
   margin-top: 4px;
 }
 
 .banner {
-  background-color: #edf8fe;
+  background-color: var(--background-color);
   height: 60px;
   border-radius: 0.75rem;
   margin-bottom: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px var(--border-color);
 }
 
 .content-box {
   background: #ffffff;
   border-radius: 0.75rem;
   flex: 1;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px var(--border-color);
 }

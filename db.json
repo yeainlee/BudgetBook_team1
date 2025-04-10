@@ -282,6 +282,24 @@
       "price": 5000000,
       "categoryId": 1,
       "desc": "특별 보너스"
+    },
+    {
+      "id": "775d",
+      "userid": "tokkaeng",
+      "type": "income",
+      "date": "",
+      "price": 0,
+      "categoryId": 0,
+      "desc": ""
+    },
+    {
+      "id": "9698",
+      "userid": "tokkaeng",
+      "type": "income",
+      "date": "",
+      "price": 0,
+      "categoryId": 0,
+      "desc": ""
     }
   ]
 }
