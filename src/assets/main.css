@@ -19,11 +19,6 @@
   --red-hover: rgba(229, 57, 53, 0.1);
   --background: rgb(255, 255, 255);
   --light-color: rgb(238, 238, 238);
-
-  /* 원래 sidebar 강조 색상 : #1e88e5 */
-  /* border로만 받아옴(지우기) */
-  /* 버튼 Borderradius 10px */
-  /* input 7px */
 }
 
 body {
