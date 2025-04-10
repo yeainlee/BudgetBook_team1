@@ -155,7 +155,7 @@ input {
 button {
   width: 70%;
   padding: 0.75rem;
-  background-color: var(--button-color);
+  background-color: var(--light-color);
   color: black;
   border: none;
   margin: 1rem auto;
@@ -165,7 +165,7 @@ button {
   transition: background-color 0.3s ease;
 }
 button:hover {
-  background-color: var(--blue-mid);
+  background-color: var(--button-color);
 }
 button:disabled {
   background-color: var(--background-color);

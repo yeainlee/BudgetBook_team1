@@ -140,27 +140,27 @@ const getCategoryName = (categoryId) => {
     </div>
 
     <!-- 탭 메뉴 -->
-    <div class="tabs">
+    <div class="tab-buttons">
       <button
-        :class="['tab', selectedTab === 'all' ? 'active' : '']"
+        :class="['tab-button', selectedTab === 'all' ? 'active' : '']"
         @click="changeTab('all')"
       >
         전체
       </button>
       <button
-        :class="['tab', selectedTab === 'category' ? 'active' : '']"
+        :class="['tab-button', selectedTab === 'category' ? 'active' : '']"
         @click="changeTab('category')"
       >
         카테고리별
       </button>
       <button
-        :class="['tab', selectedTab === 'income' ? 'active' : '']"
+        :class="['tab-button', selectedTab === 'income' ? 'active' : '']"
         @click="changeTab('income')"
       >
         수입
       </button>
       <button
-        :class="['tab', selectedTab === 'outcome' ? 'active' : '']"
+        :class="['tab-button', selectedTab === 'outcome' ? 'active' : '']"
         @click="changeTab('outcome')"
       >
         지출
@@ -208,11 +208,6 @@ const getCategoryName = (categoryId) => {
         <TransactionList :transactions="currentTransactions" />
       </div>
     </div>
-
-    <!-- 거래 추가 버튼 -->
-    <button @click="goToAddPage" class="add-btn">
-      <i class="fa-solid fa-plus"></i>
-    </button>
   </div>
 </template>
 
@@ -233,30 +228,26 @@ h2 {
   color: #333;
 }
 
-.tabs {
+.tab-buttons {
   display: flex;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ddd;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.tab {
-  padding: 10px 20px;
-  background: none;
-  border: none;
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+  background-color: var(--light-color);
+  color: black;
   cursor: pointer;
-  font-size: 16px;
-  color: #555;
-  border-bottom: 3px solid transparent;
 }
 
-.tab:hover {
-  color: #1e88e5;
-}
-
-.tab.active {
-  color: #1e88e5;
-  border-bottom: 3px solid #1e88e5;
-  font-weight: 500;
+.tab-button.active {
+  background-color: var(--button-color);
+  color: black;
 }
 
 .transaction-container,
@@ -309,28 +300,5 @@ th {
   padding: 30px;
   text-align: center;
   color: #666;
-}
-
-.add-btn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background-color: #1e88e5;
-  color: white;
-  border: none;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s;
-}
-
-.add-btn:hover {
-  background-color: #1976d2;
 }
 </style>

@@ -348,7 +348,7 @@ input {
 button {
   width: 100%;
   padding: 0.4rem;
-  background-color: var(--button-color);
+  background-color: var(--light-color);
   border: 1px solid var(--border-color);
   color: black;
   border-radius: 10px;
@@ -361,7 +361,7 @@ button[disabled] {
 }
 
 button:hover {
-  background-color: var(--blue-mid);
+  background-color: var(--button-color);
 }
 
 .input-group button:not(.eye-button) {
@@ -369,9 +369,13 @@ button:hover {
   padding: 0.4rem 0.8rem;
   border: none;
   border-radius: 10px;
-  background-color: var(--button-color);
+  background-color: var(--light-color);
   color: black;
   cursor: pointer;
+}
+
+.input-group button:hover {
+  background-color: var(--button-color);
 }
 
 .password-wrapper {
@@ -390,7 +394,6 @@ button:hover {
   color: black;
   cursor: pointer;
 }
-
 .eye-button {
   all: unset; /* 버튼의 모든 기본 스타일 제거거 */
   position: absolute;

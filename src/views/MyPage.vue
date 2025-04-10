@@ -168,8 +168,12 @@ const handleUpdate = async () => {
   margin: 0 10rem 0 0;
   font-size: 1rem;
   border-radius: 10px;
-  background-color: var(--button-color);
+  background-color: var(--light-color);
   cursor: pointer;
+}
+
+.profile-button:hover {
+  background-color: var(--button-color);
 }
 
 .profile-section img {
@@ -232,7 +236,11 @@ const handleUpdate = async () => {
   border: var(--border-color);
   padding: 12rem auto;
   border-radius: 10px;
-  background-color: var(--button-color);
+  background-color: var(--light-color);
   cursor: pointer;
+}
+
+.form-buttons button:hover {
+  background-color: var(--button-color);
 }
 </style>

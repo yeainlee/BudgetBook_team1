@@ -93,16 +93,18 @@ const recentTransactions = computed(() =>
 }
 
 .tab-buttons button {
+  margin-top: 4rem;
   padding: 0.5rem 1rem;
-  background-color: #e8f4ff;
-  border: 1px solid #87cefa;
-  border-radius: 6px;
+  background-color: var(--light-color);
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  font-size: 1rem;
   cursor: pointer;
   font-weight: bold;
 }
 
 .tab-buttons button.active {
-  background-color: #81a9cb;
-  color: white;
+  background-color: var(--button-color);
+  color: black;
 }
 </style>
