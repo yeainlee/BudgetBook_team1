@@ -25,10 +25,16 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '../../store/userStore'; // Pinia 스토어 import
+import { computed } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
 const userStore = useUserStore(); // Pinia 스토어 사용
+
+// 사용자 이름 표시 (로그인된 상태면 사용자 이름, 아니면 기본값)
+const userName = computed(() =>
+  userStore.isLoggedIn && userStore.user ? userStore.user.id : null
+);
 
 // 메뉴 아이템 정의
 const menuItems = [
@@ -44,7 +50,7 @@ const menuItems = [
   },
   {
     icon: 'fa-solid fa-plus',
-    route: '/transaction/edit/:id',
+    route: '/transaction/edit/' + userName,
     name: '거래추가',
   },
   {
@@ -62,13 +68,13 @@ const isActive = (path) => {
   if (
     path === '/transaction' &&
     route.path.startsWith('/transaction') &&
-    route.path !== '/transaction/edit/:id'
+    route.path !== '/transaction/edit/' + userName
   ) {
     return true;
   }
   if (
-    path === '/transaction/edit/:id' &&
-    route.path === '/transaction/edit/:id'
+    path === '/transaction/edit/' + userName &&
+    route.path === '/transaction/edit/' + userName
   ) {
     return true;
   }
