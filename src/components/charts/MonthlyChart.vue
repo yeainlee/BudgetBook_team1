@@ -24,8 +24,12 @@ onMounted(async () => {
   await transactionStore.fetchTransactions(userStore.user.id);
   const trades = transactionStore.transactions;
 
+  const currentMonth = new Date().toISOString().slice(0, 7);
+
   // 월별 수입/지출 계산
-  const monthly = {};
+  const monthly = {
+    [currentMonth]: { income: 0, outcome: 0 },
+  };
 
   trades.forEach((tx) => {
     const month = tx.date.slice(0, 7);
@@ -41,7 +45,7 @@ onMounted(async () => {
     monthly[month][type] += Number(price);
   });
 
-  const sortedMonths = Object.keys(monthly).sort();
+  const sortedMonths = [currentMonth];
   const incomeData = sortedMonths.map((month) => monthly[month].income);
   const outcomeData = sortedMonths.map((month) => monthly[month].outcome);
 

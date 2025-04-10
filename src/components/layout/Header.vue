@@ -20,14 +20,14 @@ const currentDateFormatted = computed(() => {
     month: 'long',
     year: 'numeric',
   };
-  return now.toLocaleDateString('en-US', options);
+  return now.toLocaleDateString('ko-KR', options);
 });
 </script>
 
 <template>
   <header class="header">
     <div class="welcome">
-      <h2>Welcome, {{ userName }}</h2>
+      <h2>안녕하세요, {{ userName }}</h2>
       <p>{{ currentDateFormatted }}</p>
     </div>
     <div class="search-notification">
