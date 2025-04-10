@@ -17,7 +17,7 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage,
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     // 로그인 했을 때 접근 가능함 -> true
   },
   {
