@@ -110,11 +110,10 @@ onMounted(async () => {
 
 <style scoped>
 canvas {
-  width: 80%;
-  max-width: 100%;
-  max-height: 400px;
-  height: auto;
-  display: block;
+  width: 50%;
+  max-width: 320px;
+  height: 100%;
   margin: 0 auto;
+  display: block;
 }
 </style>
