@@ -43,6 +43,36 @@
       "id": "5",
       "name": "교통",
       "type": "outcome"
+    },
+    {
+      "id": "6",
+      "name": "구독료",
+      "type": "outcome"
+    },
+    {
+      "id": "7",
+      "name": "쇼핑",
+      "type": "outcome"
+    },
+    {
+      "id": "8",
+      "name": "여가",
+      "type": "outcome"
+    },
+    {
+      "id": "9",
+      "name": "배당금",
+      "type": "income"
+    },
+    {
+      "id": "10",
+      "name": "성과급",
+      "type": "income"
+    },
+    {
+      "id": "11",
+      "name": "용돈",
+      "type": "outcome"
     }
   ],
   "trade_list": [

@@ -46,26 +46,7 @@ const handleCancel = () => {
     router.back(); // 이전 페이지로 이동
   }, 1500); // 토스트 잠깐 보여주고 이동 (1.5초 후)
 };
-// const handleSubmit = async () => {
-//   const payload = {
-//     userid: userId,
-//     type: type.value,
-//     date: date.value,
-//     price: Number(price.value),
-//     categoryId: Number(categoryId.value),
-//     desc: desc.value,
-//   };
 
-//   if (isEdit.value) {
-//     await axios.patch(`/trade_list/${tradeId}`, payload);
-//   } else {
-//     await axios.post(`/trade_list`, payload);
-//   }
-//   toastStore.showToast('저장되었습니다.', 'info');
-//   setTimeout(() => {
-//     router.push('/transactions');
-//   }, 3000); // 토스트 잠깐 보여주고 이동 (3초 후)
-// }; //저장누르면 실행
 const handleSubmit = async () => {
   const payload = {
     userid: userId,
@@ -78,13 +59,12 @@ const handleSubmit = async () => {
 
   try {
     if (isEdit.value) {
-      await axios.patch(`/trade_list/${tradeId}`, payload);
+      await axios.put(`/trade_list/${tradeId}`, payload);
     } else {
       await axios.post(`/trade_list`, payload);
     }
 
     toastStore.showToast('저장되었습니다.', 'success');
-    // 토스트 다 보이고 이동
     setTimeout(() => {
       router.push('/transactions');
     }, 2000);

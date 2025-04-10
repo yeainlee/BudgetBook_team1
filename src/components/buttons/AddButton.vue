@@ -5,7 +5,7 @@ const router = useRouter();
 
 // 거래 등록 페이지로 이동
 function goToAddPage() {
-  router.push('/transaction');
+  router.push('/transaction/edit');
 }
 </script>
 

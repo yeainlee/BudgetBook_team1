@@ -10,8 +10,11 @@ const transactionStore = useTransactionStore();
 const recentList = ref([]);
 
 onMounted(async () => {
-  await transactionStore.fetchUserTransactions(userStore.user.id);
-  recentList.value = transactionStore.sortedTransactions.slice(0, 5);
+  // user가 존재하는지 확인 후 id에 접근
+  if (userStore.user) {
+    await transactionStore.fetchUserTransactions(userStore.user.id);
+    recentList.value = transactionStore.sortedTransactions.slice(0, 5);
+  }
 });
 </script>
 
