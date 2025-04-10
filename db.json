@@ -5,9 +5,8 @@
       "user_name": "토깽",
       "user_nickname": "토깽",
       "phone_num": "010-1234-5678",
-      "email": "dasasd",
-      "password": "dsasacccc",
-      "name": "dsaasd"
+      "email": "tokkaeng@example.com",
+      "password": "password123"
     },
     {
       "id": "tokkaeng1",
@@ -43,13 +42,44 @@
       "id": "5",
       "name": "교통",
       "type": "outcome"
+    },
+    {
+      "id": "6",
+      "name": "구독료",
+      "type": "outcome"
+    },
+    {
+      "id": "7",
+      "name": "쇼핑",
+      "type": "outcome"
+    },
+    {
+      "id": "8",
+      "name": "여가",
+      "type": "outcome"
+    },
+    {
+      "id": "9",
+      "name": "배당금",
+      "type": "income"
+    },
+    {
+      "id": "10",
+      "name": "성과급",
+      "type": "income"
+    },
+    {
+      "id": "11",
+      "name": "용돈",
+      "type": "outcome"
     }
   ],
+
   "trade_list": [
     {
       "id": "a1",
       "categoryId": 2,
-      "price": 3003,
+      "price": 3000,
       "type": "income",
       "date": "2025-04-07",
       "desc": "용돈",

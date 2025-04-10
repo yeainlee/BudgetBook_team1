@@ -51,7 +51,7 @@ const handleUpdate = async () => {
       id: form.value.username,
       password: form.value.password,
       email: form.value.email,
-      name: form.value.name,
+      user_name: form.value.name,
     });
 
     // 수정된 정보로 현재 사용자 정보 갱신
