@@ -112,6 +112,8 @@ export const useUserStore = defineStore('user', () => {
         localStorage.setItem('userId', foundUser.id);
 
         toastStore.showToast('로그인 성공', 'success');
+        console.log("로그인 성공!!");
+        
 
         return true;
       } else {
