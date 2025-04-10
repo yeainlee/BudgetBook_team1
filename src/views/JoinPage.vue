@@ -341,7 +341,7 @@ input {
   padding: 0.75rem;
   border: 1px solid var(--border-color);
   color: white;
-  border-radius: 6px;
+  border-radius: 7px;
   font-size: 1rem;
 }
 
@@ -350,8 +350,8 @@ button {
   padding: 0.4rem;
   background-color: var(--button-color);
   border: 1px solid var(--border-color);
-  color: white;
-  border-radius: 6px;
+  color: black;
+  border-radius: 10px;
   font-size: 1rem;
 }
 
@@ -368,9 +368,9 @@ button:hover {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   background-color: var(--button-color);
-  color: white;
+  color: black;
   cursor: pointer;
 }
 
@@ -385,9 +385,9 @@ button:hover {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   background-color: var(--button-color);
-  color: white;
+  color: black;
   cursor: pointer;
 }
 

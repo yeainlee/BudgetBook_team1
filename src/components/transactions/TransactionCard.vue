@@ -23,6 +23,7 @@ const handleDelete = async () => {
 
 // 각각의 거래 내역 클릭 시 거래 내역 수정 페이지로 이동
 const goToEditPage = () => {
+  console.log(`거래 ID: ${props.transaction.id}로 이동 시도`);
   router.push({
     name: 'TransactionEditPage',
     params: { id: props.transaction.id },

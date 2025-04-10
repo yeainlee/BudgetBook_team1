@@ -3,6 +3,11 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore';
 
+// 색상 코드 받아오기
+const rootStyle = getComputedStyle(document.documentElement);
+const border = rootStyle.getPropertyValue('--border-color').trim();
+const button = rootStyle.getPropertyPriority('--button-color').trim();
+
 const router = useRouter();
 const userStore = useUserStore(); // Pinia 스토어 사용
 
@@ -12,7 +17,7 @@ const userName = computed(() =>
 
 // 거래 등록 페이지로 이동
 function goToAddPage() {
-  router.push(`/transaction/edit`);
+  router.push('/transaction/edit');
 }
 </script>
 
@@ -38,7 +43,7 @@ button {
   padding: 0;
   border-radius: 50%;
   background-color: var(--button-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(—border-color);
   cursor: pointer;
 }
 </style>

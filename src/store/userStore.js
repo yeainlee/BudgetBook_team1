@@ -13,6 +13,9 @@ export const useUserStore = defineStore('user', () => {
   const loading = ref(false); // 로딩 중 여부
   const error = ref(null); // 에러 메시지 저장
 
+  // computed로 userId 추가
+  const userId = computed(() => user.value?.id || null);
+
   // 상태 복원
   const savedUser = localStorage.getItem('user');
   const savedLoginStatus = localStorage.getItem('isLoggedIn');
@@ -62,9 +65,14 @@ export const useUserStore = defineStore('user', () => {
     loading.value = true;
     error.value = null;
 
+    const mergedData = {
+      ...user.value, // 기존 정보
+      ...updatedData, // 변경한 정보 (우선 적용됨)
+    };
+
     try {
       // userId로 put 요청
-      const patchRes = await axios.put(`${API_URL}/${userId}`, updatedData);
+      const patchRes = await axios.put(`${API_URL}/${userId}`, mergedData);
 
       // 상태 업데이트
       if (user.value && user.value.id === userId) {
@@ -98,10 +106,12 @@ export const useUserStore = defineStore('user', () => {
       if (foundUser && foundUser.password === loginPw) {
         user.value = foundUser;
         isLoggedIn.value = true;
-        toastStore.showToast('로그인 성공', 'success');
 
         // 로그인 성공 시 userid만 로컬스토리지에 저장
+        localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userId', foundUser.id);
+
+        toastStore.showToast('로그인 성공', 'success');
 
         return true;
       } else {
@@ -150,6 +160,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     users,
     user,
+    userId,
     isLoggedIn,
     loading,
     error,

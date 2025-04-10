@@ -80,7 +80,11 @@ const handleLogin = async () => {
         <!-- 에러 메시지 표시 -->
         <p v-if="errorMessage" class="error-msg">{{ errorMessage }}</p>
         <!-- 로그인 버튼 -->
-        <button type="submit" :disabled="userStore.loading">
+        <button
+          class="login-button"
+          type="submit"
+          :disabled="userStore.loading"
+        >
           {{ userStore.loading ? 'Signing in...' : 'SIGN IN' }}
         </button>
         <!-- 회원가입 버튼 -->
@@ -125,6 +129,13 @@ const handleLogin = async () => {
   font-size: 1.8rem;
   align-items: left;
 }
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 h1 {
   font-size: 1.8rem;
   margin: 0;
@@ -132,17 +143,12 @@ h1 {
   text-align: center;
   width: 100%;
 }
-.input-group {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
 
 input {
   width: 70%;
   padding: 1rem;
   border: 1.3px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 7px;
   margin-bottom: 0.7rem auto;
 }
 
@@ -150,11 +156,11 @@ button {
   width: 70%;
   padding: 0.75rem;
   background-color: var(--button-color);
-  color: white;
+  color: black;
   border: none;
   margin: 1rem auto;
   display: block;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -163,7 +169,7 @@ button:hover {
 }
 button:disabled {
   background-color: var(--background-color);
-  color: #999;
+  color: var(--border-color);
   cursor: not-allowed;
 }
 .password-wrapper {

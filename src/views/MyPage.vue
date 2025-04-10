@@ -51,7 +51,7 @@ const handleUpdate = async () => {
       id: form.value.username,
       password: form.value.password,
       email: form.value.email,
-      name: form.value.name,
+      user_name: form.value.name,
     });
 
     // 수정된 정보로 현재 사용자 정보 갱신
@@ -101,22 +101,22 @@ const handleUpdate = async () => {
         </div>
         <div>
           <!-- 아이디는 변경 불가능 -->
-          <label>아이디</label>
+          <p>아이디</p>
           <input v-model="form.username" type="text" disabled />
         </div>
 
         <div>
-          <label>비밀번호 변경</label>
+          <p>비밀번호 변경</p>
           <input v-model="form.password" type="password" />
         </div>
 
         <div>
-          <label>이메일 확인</label>
+          <p>이메일 확인</p>
           <input v-model="form.email" type="email" />
         </div>
 
         <div>
-          <label>이름</label>
+          <p>이름</p>
           <input v-model="form.name" type="text" />
         </div>
 
@@ -130,11 +130,14 @@ const handleUpdate = async () => {
 
 <style scoped>
 .mypage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 800px;
-  margin: 0 auto;
-  padding: 40px;
+  margin: 5rem auto;
+  padding: 3rem;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 .mypage-container h1 {
@@ -144,44 +147,49 @@ const handleUpdate = async () => {
 
 .setting-wrapper {
   display: flex;
-  gap: 40px;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  gap: 5rem;
 }
 
 .profile-section {
-  width: 250px;
-  display: flex;
+  flex: 0.6;
   flex-direction: column;
+  display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
 }
 
 .profile-button {
-  padding: 8px 16px;
+  width: 50%;
+  padding: 0.75rem 0;
   border: none;
-  border-radius: 5px;
-  background-color: #b7e9fc;
+  margin: 0 10rem 0 0;
+  font-size: 1rem;
+  border-radius: 10px;
+  background-color: var(--button-color);
   cursor: pointer;
 }
 
 .profile-section img {
-  width: 150px;
-  height: 150px;
+  margin: 10rem 10rem 3rem auto;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   background-color: white;
-  border: 1px solid rgb(62, 59, 59);
+  border: 1px solid var(--dark-text);
 }
 
 .form-title {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 5px;
+  font-weight: 1000;
 }
 
 .icon-wrapper {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 0px;
+  margin-bottom: -1.3rem;
 }
 
 .edit-icon {
@@ -190,11 +198,11 @@ const handleUpdate = async () => {
 }
 
 .form-section {
-  width: 400px;
+  width: 35rem;
   flex: none;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 2rem;
 }
 
 .form-section label {
@@ -205,10 +213,9 @@ const handleUpdate = async () => {
 
 .form-section input {
   width: 100%;
-  padding: 8px;
+  padding: 0.75rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f5f5f5;
+  border-radius: 7px;
 }
 
 .form-buttons {
@@ -219,10 +226,13 @@ const handleUpdate = async () => {
 }
 
 .form-buttons button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #b7e9fc;
+  width: 100%;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  border: var(--border-color);
+  padding: 12rem auto;
+  border-radius: 10px;
+  background-color: var(--button-color);
   cursor: pointer;
 }
 </style>

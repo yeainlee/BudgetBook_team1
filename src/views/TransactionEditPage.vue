@@ -9,15 +9,14 @@ import ToastMessage from '@/components/ToastNotification.vue'; // 토스트
 const route = useRoute(); //현재 라우팅 정보
 const router = useRouter(); //이동 기능
 const toastStore = useToastStore(); // 토스트
+const userStore = useUserStore();
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
-// console.log(`tradeID : `, tradeId);
-//const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
-const userStore = useUserStore();
-const userId = userStore.user?.id;
-// console.log(`userID :`, userId);
-// console.log(`Route`, route.params);
+
+const userId = localStorage.getItem('userId');
+console.log('✅ 현재 로그인된 userId:', userId);
+
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
 const price = ref(0); //돈
@@ -42,32 +41,14 @@ const fetchTrade = async () => {
   desc.value = data.desc;
   await fetchCategories();
 }; //수정일 때 기존 데이터 떙김
+
 const handleCancel = () => {
   toastStore.showToast('취소되었습니다.', 'info');
   setTimeout(() => {
     router.back(); // 이전 페이지로 이동
   }, 1500); // 토스트 잠깐 보여주고 이동 (1.5초 후)
 };
-// const handleSubmit = async () => {
-//   const payload = {
-//     userid: userId,
-//     type: type.value,
-//     date: date.value,
-//     price: Number(price.value),
-//     categoryId: Number(categoryId.value),
-//     desc: desc.value,
-//   };
 
-//   if (isEdit.value) {
-//     await axios.patch(`/trade_list/${tradeId}`, payload);
-//   } else {
-//     await axios.post(`/trade_list`, payload);
-//   }
-//   toastStore.showToast('저장되었습니다.', 'info');
-//   setTimeout(() => {
-//     router.push('/transactions');
-//   }, 3000); // 토스트 잠깐 보여주고 이동 (3초 후)
-// }; //저장누르면 실행
 const handleSubmit = async () => {
   const payload = {
     userid: userId,
@@ -78,15 +59,18 @@ const handleSubmit = async () => {
     desc: desc.value,
   };
 
+  // ✅ 여기서 확인
+  console.log('✅ userId 타입 및 값:', typeof userId, userId);
+  console.log('✅ payload 확인:', payload);
+
   try {
     if (isEdit.value) {
-      await axios.patch(`/trade_list/${tradeId}`, payload);
+      await axios.put(`/trade_list/${tradeId}`, payload);
     } else {
       await axios.post(`/trade_list`, payload);
     }
 
     toastStore.showToast('저장되었습니다.', 'success');
-    // 토스트 다 보이고 이동
     setTimeout(() => {
       router.push('/transactions');
     }, 2000);
@@ -205,12 +189,14 @@ onMounted(() => {
   font-weight: 550;
   font-family: inherit;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   text-align: right;
 }
 .form-label {
-  color: rgba(0, 0, 0, 0.5);
-  padding: 30px;
+  color: black;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  display: block;
 }
 .form-control {
   padding: 1px 20px;
@@ -219,33 +205,48 @@ onMounted(() => {
   font-weight: 550;
   font-family: inherit;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 .edit-page {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 1000px;
+  margin: 8rem auto;
+  padding: 3rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .type-tab {
   display: flex;
   justify-content: center;
   gap: 6px;
-  margin-bottom: 16px;
 }
+
 .type-tab button {
+  flex: 1;
   display: flex;
-  padding: 10px 55px;
-  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  justify-content: center;
+  font-size: 1.2rem;
   border-radius: 50px;
-  background: #f0f0f0;
+  background: var(--light-color);
   font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 3rem;
 }
 
 .type-tab button.active {
-  background: #007bff;
-  color: white;
+  background: var(--button-color);
+  color: black;
+}
+
+.type-tab button p {
+  color: black;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .date-wrapper {
@@ -261,24 +262,26 @@ onMounted(() => {
 
 .button-row {
   display: flex;
-  padding: 6px;
+  padding: 10px;
   gap: 10px;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
 }
 button.cancel {
-  background: #ddd;
+  background: var(--light-color);
   flex: 1;
+  font-size: 1rem;
 }
 button.submit {
-  background: #007bff;
-  color: white;
+  background: var(--button-color);
+  font-size: 1rem;
+  color: black;
   flex: 1;
 }
 button.delete {
-  background: #b7e9fc;
-  color: white;
+  background: var(--red-color);
+  color: black;
   flex: 1;
 }
 button {

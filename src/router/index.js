@@ -5,7 +5,8 @@ import TransactionEditPage from '../views/TransactionEditPage.vue';
 import MyPage from '../views/MyPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import JoinPage from '../views/JoinPage.vue';
-// import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/userStore';
+import { useToastStore } from '@/store/toastStore';
 
 const routes = [
   {
@@ -16,7 +17,7 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
     // 로그인 했을 때 접근 가능함 -> true
   },
   {
@@ -25,10 +26,16 @@ const routes = [
     component: TransactionPage,
     // meta: { requiresAuth: true },
   },
+
+  {
+    path: '/transaction/edit',
+    name: 'TransactionEditNew',
+    component: TransactionEditPage,
+  },
   {
     path: '/transaction/edit',
     name: 'TransactionEditPage',
-    component: TransactionEditPage,
+    component: () => import('@/views/TransactionEditPage.vue'),
   },
   {
     path: '/my',
@@ -55,25 +62,25 @@ const router = createRouter({
   routes,
 });
 
-// 로그인 관련해서 리다이렉트 하는 함수입니다. 모두의 테스트를 위해 주석처리 해놓겠습니다.
+//로그인 관련해서 리다이렉트 하는 함수입니다. 모두의 테스트를 위해 주석처리 해놓겠습니다.
 
-// router.beforeEach((to, from, next) => {
-//   const userStore = useUserStore();
-//   const isLoggedIn = userStore.isLoggedIn;
+router.beforeEach((to, from, next) => {
+  const userStore = localStorage.getItem('userId');
+  const isLoggedIn = userStore.isLoggedIn;
 
-//   if (to.meta.requiresAuth && !isLoggedIn) {
-//     next({ name: 'LoginPage' }); // 로그인 페이지로 리다이렉트
-//   }
-//   // 이미 로그인된 상태에서 로그인/회원가입 페이지로 가려는 경우
-//   else if (
-//     !to.meta.requiresAuth &&
-//     isLoggedIn &&
-//     (to.name === 'LoginPage' || to.name === 'JoinPage')
-//   ) {
-//     next({ name: 'MainPage' }); // 메인 페이지로 리다이렉트
-//   } else {
-//     next(); // 정상적으로 라우팅 계속 진행
-//   }
-// });
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next({ name: 'LoginPage' }); // 로그인 페이지로 리다이렉트
+  }
+  // 이미 로그인된 상태에서 로그인/회원가입 페이지로 가려는 경우
+  else if (
+    !to.meta.requiresAuth &&
+    isLoggedIn &&
+    (to.name === 'LoginPage' || to.name === 'JoinPage')
+  ) {
+    next({ name: 'MainPage' }); // 메인 페이지로 리다이렉트
+  } else {
+    next(); // 정상적으로 라우팅 계속 진행
+  }
+});
 
 export default router;
