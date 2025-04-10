@@ -17,37 +17,43 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
     // 로그인 했을 때 접근 가능함 -> true
   },
   {
     path: '/transaction',
     name: 'TransactionPage',
     component: TransactionPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
   },
+
   {
     path: '/transaction/edit',
-    name: 'TransactionEditPage',
+    name: 'TransactionEditNew',
     component: TransactionEditPage,
+  },
+  {
+    path: '/transaction/edit/:id',
+    name: 'TransactionEditPage',
+    component: () => import('@/views/TransactionEditPage.vue'),
   },
   {
     path: '/my',
     name: 'MyPage',
     component: MyPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
   },
   {
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
-    meta: { requiresAuth: false },
+    // meta: { requiresAuth: false },
   },
   {
     path: '/join',
     name: 'JoinPage',
     component: JoinPage,
-    meta: { requiresAuth: false },
+    // meta: { requiresAuth: false },
   },
 ];
 
