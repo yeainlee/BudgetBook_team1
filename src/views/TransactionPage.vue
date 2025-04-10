@@ -95,10 +95,10 @@ const currentTransactions = computed(() => {
 // 컴포넌트 초기화
 onMounted(async () => {
   // 로그인 체크
-  if (!userStore.isLoggedIn || !userStore.user) {
-    router.push('/login');
-    return;
-  }
+  // if (!userStore.isLoggedIn || !userStore.user) {
+  //   router.push('/login');
+  //   return;
+  // }
 
   try {
     // 카테고리 목록 불러오기
