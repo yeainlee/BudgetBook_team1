@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import profileImage from '@/assets/profile.png';
+// import profileImage from '@/assets/profile.png';
+import profileImage from '@/img/bunny.png';
+
 import { useUserStore } from '@/store/userStore';
 import { useToastStore } from '@/store/toastStore';
 import ToastMessage from '@/components/ToastNotification.vue';
