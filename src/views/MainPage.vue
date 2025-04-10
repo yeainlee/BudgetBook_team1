@@ -68,13 +68,16 @@ const recentTransactions = computed(() =>
 /* 차트 스타일 */
 .main-container {
   display: flex;
+  height: 100%;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: stretch;
   gap: 1rem;
   padding: 1rem;
 }
 
 .chart-section {
-  flex: 2;
+  flex: 1;
 }
 
 .side-section {
