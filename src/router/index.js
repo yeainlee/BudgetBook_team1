@@ -6,10 +6,7 @@ import MyPage from '../views/MyPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import JoinPage from '../views/JoinPage.vue';
 import { useUserStore } from '@/store/userStore';
-<<<<<<< HEAD
-=======
 import { useToastStore } from '@/store/toastStore';
->>>>>>> c09ffa8525b6bb02f15d3b239902bc84cdec8649
 
 const routes = [
   {
