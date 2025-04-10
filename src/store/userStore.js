@@ -62,9 +62,14 @@ export const useUserStore = defineStore('user', () => {
     loading.value = true;
     error.value = null;
 
+    const mergedData = {
+      ...user.value, // 기존 정보
+      ...updatedData, // 변경한 정보 (우선 적용됨)
+    };
+
     try {
       // userId로 put 요청
-      const patchRes = await axios.put(`${API_URL}/${userId}`, updatedData);
+      const patchRes = await axios.put(`${API_URL}/${userId}`, mergedData);
 
       // 상태 업데이트
       if (user.value && user.value.id === userId) {
