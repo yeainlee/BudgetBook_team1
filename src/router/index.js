@@ -17,43 +17,45 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage,
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     // 로그인 했을 때 접근 가능함 -> true
   },
   {
     path: '/transaction',
     name: 'TransactionPage',
     component: TransactionPage,
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
   },
 
   {
     path: '/transaction/edit',
     name: 'TransactionEditNew',
     component: TransactionEditPage,
+    meta: { requiresAuth: true },
   },
   {
     path: '/transaction/edit/:id',
     name: 'TransactionEditPage',
     component: () => import('@/views/TransactionEditPage.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/my',
     name: 'MyPage',
     component: MyPage,
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
   },
   {
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
-    // meta: { requiresAuth: false },
+    meta: { requiresAuth: false },
   },
   {
     path: '/join',
     name: 'JoinPage',
     component: JoinPage,
-    // meta: { requiresAuth: false },
+    meta: { requiresAuth: false },
   },
 ];
 
@@ -65,8 +67,9 @@ const router = createRouter({
 //로그인 관련해서 리다이렉트 하는 함수입니다. 모두의 테스트를 위해 주석처리 해놓겠습니다.
 
 router.beforeEach((to, from, next) => {
-  const userStore = localStorage.getItem('userId');
-  const isLoggedIn = userStore.isLoggedIn;
+  const userId = localStorage.getItem('userId');
+  const isLoggedIn = !!userId;
+  console.log(`로그인 아이디:${userId}, 로그인 상태:${isLoggedIn}`);
 
   if (to.meta.requiresAuth && !isLoggedIn) {
     next({ name: 'LoginPage' }); // 로그인 페이지로 리다이렉트
