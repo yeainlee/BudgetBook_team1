@@ -5,7 +5,7 @@ import TransactionEditPage from '../views/TransactionEditPage.vue';
 import MyPage from '../views/MyPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import JoinPage from '../views/JoinPage.vue';
-// import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store/userStore';
 
 const routes = [
   {
