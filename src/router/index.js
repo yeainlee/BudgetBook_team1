@@ -5,7 +5,7 @@ import TransactionEditPage from '../views/TransactionEditPage.vue';
 import MyPage from '../views/MyPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import JoinPage from '../views/JoinPage.vue';
-import { useUserStore } from '@/store/userStore';
+// import { useUserStore } from '@/store/userStore';
 
 const routes = [
   {
@@ -16,7 +16,7 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage,
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     // 로그인 했을 때 접근 가능함 -> true
   },
   {
