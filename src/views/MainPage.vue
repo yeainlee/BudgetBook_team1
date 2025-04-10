@@ -7,6 +7,7 @@ import MonthlyChart from '@/components/charts/MonthlyChart.vue';
 import DoughnutChart from '@/components/charts/DoughnutChart.vue';
 import RecentTransactionList from '@/components/transactions/RecentTransactionList.vue';
 import AddButton from '@/components/buttons/AddButton.vue';
+import ToastNotification from '@/components/ToastNotification.vue';
 
 const userStore = useUserStore();
 const transactionStore = useTransactionStore();

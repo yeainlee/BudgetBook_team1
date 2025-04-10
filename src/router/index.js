@@ -6,6 +6,10 @@ import MyPage from '../views/MyPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import JoinPage from '../views/JoinPage.vue';
 import { useUserStore } from '@/store/userStore';
+<<<<<<< HEAD
+=======
+import { useToastStore } from '@/store/toastStore';
+>>>>>>> c09ffa8525b6bb02f15d3b239902bc84cdec8649
 
 const routes = [
   {
@@ -16,37 +20,43 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
     // 로그인 했을 때 접근 가능함 -> true
   },
   {
     path: '/transaction',
     name: 'TransactionPage',
     component: TransactionPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
+  },
+
+  {
+    path: '/transaction/edit',
+    name: 'TransactionEditNew',
+    component: TransactionEditPage,
   },
   {
     path: '/transaction/edit/:id',
     name: 'TransactionEditPage',
-    component: TransactionEditPage,
+    component: () => import('@/views/TransactionEditPage.vue'),
   },
   {
     path: '/my',
     name: 'MyPage',
     component: MyPage,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
   },
   {
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
-    meta: { requiresAuth: false },
+    // meta: { requiresAuth: false },
   },
   {
     path: '/join',
     name: 'JoinPage',
     component: JoinPage,
-    meta: { requiresAuth: false },
+    // meta: { requiresAuth: false },
   },
 ];
 

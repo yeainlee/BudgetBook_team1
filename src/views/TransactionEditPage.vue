@@ -15,7 +15,7 @@ const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
 
 const userId = localStorage.getItem('userId');
-console.log('✅ 현재 로그인된 userId:', userId); 
+console.log('✅ 현재 로그인된 userId:', userId);
 
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
@@ -48,26 +48,6 @@ const handleCancel = () => {
     router.back(); // 이전 페이지로 이동
   }, 1500); // 토스트 잠깐 보여주고 이동 (1.5초 후)
 };
-// const handleSubmit = async () => {
-//   const payload = {
-//     userid: userId,
-//     type: type.value,
-//     date: date.value,
-//     price: Number(price.value),
-//     categoryId: Number(categoryId.value),
-//     desc: desc.value,
-//   };
-
-//   if (isEdit.value) {
-//     await axios.patch(`/trade_list/${tradeId}`, payload);
-//   } else {
-//     await axios.post(`/trade_list`, payload);
-//   }
-//   toastStore.showToast('저장되었습니다.', 'info');
-//   setTimeout(() => {
-//     router.push('/transactions');
-//   }, 3000); // 토스트 잠깐 보여주고 이동 (3초 후)
-// }; //저장누르면 실행
 
 const handleSubmit = async () => {
   const payload = {
@@ -79,19 +59,18 @@ const handleSubmit = async () => {
     desc: desc.value,
   };
 
-    // ✅ 여기서 확인
+  // ✅ 여기서 확인
   console.log('✅ userId 타입 및 값:', typeof userId, userId);
   console.log('✅ payload 확인:', payload);
 
   try {
     if (isEdit.value) {
-      await axios.patch(`/trade_list/${tradeId}`, payload);
+      await axios.put(`/trade_list/${tradeId}`, payload);
     } else {
       await axios.post(`/trade_list`, payload);
     }
 
     toastStore.showToast('저장되었습니다.', 'success');
-    // 토스트 다 보이고 이동
     setTimeout(() => {
       router.push('/transactions');
     }, 2000);
