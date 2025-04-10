@@ -67,9 +67,8 @@ const router = createRouter({
 //로그인 관련해서 리다이렉트 하는 함수입니다. 모두의 테스트를 위해 주석처리 해놓겠습니다.
 
 router.beforeEach((to, from, next) => {
-  const userId = localStorage.getItem('userId');
-  const isLoggedIn = !!userId;
-  console.log(`로그인 아이디:${userId}, 로그인 상태:${isLoggedIn}`);
+  const userStore = useUserStore();
+  const isLoggedIn = userStore.isLoggedIn;
 
   if (to.meta.requiresAuth && !isLoggedIn) {
     next({ name: 'LoginPage' }); // 로그인 페이지로 리다이렉트
