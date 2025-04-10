@@ -112,15 +112,15 @@ export const useUserStore = defineStore('user', () => {
         localStorage.setItem('userId', foundUser.id);
 
         toastStore.showToast('로그인 성공', 'success');
-        console.log("로그인 성공!!");
-        
+        console.log('로그인 성공!!');
 
         return true;
       } else {
         throw new Error('아이디 또는 비밀번호가 일치하지 않습니다.');
       }
     } catch (err) {
-      error.value = err.message || '로그인 실패';
+      // error.value = err.message || '로그인 실패';
+      error.value = '로그인 실패';
       toastStore.showToast(error.value, 'error');
       return false;
     } finally {
