@@ -170,7 +170,11 @@ watch(userId, () => {
   <!-- <ToastNotification /> -->
   <div class="join-page">
     <div class="join-container-img">
-      <img src="../img/join.png" alt="join" />
+      <img
+        src="../img/join.png"
+        alt="join"
+        style="max-width: 100%; height: auto; width: 100%"
+      />
     </div>
     <div class="join-container">
       <h1>CREATE ACCOUNT</h1>
@@ -340,7 +344,7 @@ input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
-  color: white;
+  color: black;
   border-radius: 7px;
   font-size: 1rem;
 }

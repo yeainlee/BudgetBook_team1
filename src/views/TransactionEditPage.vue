@@ -11,6 +11,7 @@ const router = useRouter(); //이동 기능
 const toastStore = useToastStore(); // 토스트
 const userStore = useUserStore();
 
+const formattedPrice = ref('');
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
 
@@ -29,6 +30,18 @@ const fetchCategories = async () => {
   console.log('받아온 카테고리 목록:', data); //콘솔창 확인용 -추가
   categoryList.value = data;
 }; //type(수입/지출)에 따라 맞는 카테고리 떙김
+
+// 숫자(price)가 바뀌면 formattedPrice도 쉼표 포함된 문자열로 자동 갱신
+watch(price, (newPrice) => {
+  formattedPrice.value = newPrice.toLocaleString();
+});
+
+// 입력한 문자열을 숫자로 변환해서 price에 저장
+const handlePriceInput = (event) => {
+  const rawValue = event.target.value.replace(/,/g, ''); // , 제거
+  const numericValue = Number(rawValue); //문자열 숫자로 변환
+  price.value = isNaN(numericValue) ? 0 : numericValue; //숫자아니면 0, 숫자면 저장
+};
 
 watch(type, fetchCategories); //type 값이 변경될 때마다 fetchCategories 함수를 실행하여 카테고리 목록을 다시 가져옴
 
@@ -124,10 +137,11 @@ onMounted(() => {
     <div class="input M-input">
       <span class="currency">₩</span>
       <input
-        type="number"
+        type="text"
         id="inputmoney"
         class="form-control"
-        v-model="price"
+        :value="formattedPrice"
+        @input="handlePriceInput"
       />
     </div>
     <br />

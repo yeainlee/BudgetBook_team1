@@ -302,49 +302,13 @@
       "desc": ""
     },
     {
-      "id": "e35a",
-      "userid": "tokkaeng1",
-      "type": "outcome",
-      "date": "2025-04-11",
-      "price": 20000,
-      "categoryId": 8,
-      "desc": "미용실"
-    },
-    {
-      "id": "a891",
-      "userid": "tokkaeng1",
-      "type": "outcome",
-      "date": "2025-04-10",
-      "price": 20000,
-      "categoryId": 4,
-      "desc": "탕후루"
-    },
-    {
-      "id": "c358",
-      "userid": "tokkaeng1",
-      "type": "outcome",
-      "date": "2025-04-10",
-      "price": 2000,
-      "categoryId": 5,
-      "desc": "버스"
-    },
-    {
-      "id": "606b",
-      "userid": "tokkaeng1",
-      "type": "income",
-      "date": "2025-04-09",
-      "price": 50000,
-      "categoryId": 9,
-      "desc": "얏호"
-    },
-    {
-      "id": "f1e1",
+      "id": "2c39",
       "userid": "tokkaeng",
       "type": "income",
-      "date": "2025-04-10",
-      "price": 20000,
-      "categoryId": 1,
-      "desc": "dd"
+      "date": "",
+      "price": 0,
+      "categoryId": 0,
+      "desc": ""
     }
   ]
 }
