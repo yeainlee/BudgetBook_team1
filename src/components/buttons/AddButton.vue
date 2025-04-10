@@ -17,7 +17,7 @@ const userName = computed(() =>
 
 // 거래 등록 페이지로 이동
 function goToAddPage() {
-  router.push(`/transaction/edit/` + userStore.user);
+  router.push('/transaction/edit');
 }
 </script>
 
