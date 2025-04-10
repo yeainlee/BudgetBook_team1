@@ -211,7 +211,7 @@ watch(userId, () => {
             class="eye-button"
             @click="showPassword = !showPassword"
           >
-            {{ showPassword ? '🙈' : '👁️' }}
+            {{ showPassword ? '🙉' : '🙈' }}
           </button>
         </div>
         <p v-if="passwordError" class="error">{{ passwordError }}</p>
@@ -233,7 +233,7 @@ watch(userId, () => {
             class="eye-button"
             @click="showConfirmPassword = !showConfirmPassword"
           >
-            {{ showConfirmPassword ? '🙈' : '👁️' }}
+            {{ showConfirmPassword ? '🙉' : '🙈' }}
           </button>
         </div>
         <p v-if="confirmPasswordError" class="error">
@@ -340,7 +340,7 @@ button:hover {
   background-color: #64b5f6;
 }
 
-.input-group button {
+.input-group button:not(.eye-button) {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
   border: none;
@@ -381,5 +381,12 @@ button:hover {
   width: auto;
   height: auto;
   line-height: 1;
+}
+/* eye-button hover 했을 때 파란색 background 제거 */
+.eye-button:focus,
+.eye-button:hover {
+  outline: none;
+  background: transparent;
+  box-shadow: none;
 }
 </style>
