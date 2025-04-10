@@ -10,6 +10,7 @@ const route = useRoute(); //현재 라우팅 정보
 const router = useRouter(); //이동 기능
 const toastStore = useToastStore(); // 토스트
 const userStore = useUserStore();
+const formattedPrice = ref('');
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
@@ -72,7 +73,7 @@ const handleSubmit = async () => {
 
     toastStore.showToast('저장되었습니다.', 'success');
     setTimeout(() => {
-      router.push('/transactions');
+      router.push('/transaction');
     }, 2000);
   } catch (error) {
     console.error('저장 실패:', error);
@@ -86,6 +87,18 @@ const handleDelete = async () => {
     router.push('/transactions');
   }
 }; //삭제
+
+// 숫자(price)가 바뀌면 formattedPrice도 쉼표 포함된 문자열로 자동 갱신
+watch(price, (newPrice) => {
+  formattedPrice.value = newPrice.toLocaleString();
+});
+
+// 입력한 문자열을 숫자로 변환해서 price에 저장
+const handlePriceInput = (event) => {
+  const rawValue = event.target.value.replace(/,/g, ''); // , 제거
+  const numericValue = Number(rawValue); //문자열 숫자로 변환
+  price.value = isNaN(numericValue) ? 0 : numericValue; //숫자아니면 0, 숫자면 저장
+};
 
 onMounted(() => {
   isEdit.value ? fetchTrade() : fetchCategories(); //참이면 앞놈 거짓이면 뒷놈
@@ -124,10 +137,11 @@ onMounted(() => {
     <div class="input M-input">
       <span class="currency">₩</span>
       <input
-        type="number"
+        type="text"
         id="inputmoney"
         class="form-control"
-        v-model="price"
+        :value="formattedPrice"
+        @input="handlePriceInput"
       />
     </div>
     <br />
