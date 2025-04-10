@@ -56,20 +56,20 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // 사용자 정보 수정 (PATCH)
+  // 사용자 정보 수정 (put)
   async function updateUser(userId, updatedData) {
     const toastStore = useToastStore();
     loading.value = true;
     error.value = null;
 
     try {
-      // userId로 PATCH 요청
-      const patchRes = await axios.patch(`${API_URL}/${userId}`, updatedData);
+      // userId로 put 요청
+      const patchRes = await axios.put(`${API_URL}/${userId}`, updatedData);
 
       // 상태 업데이트
       if (user.value && user.value.id === userId) {
         user.value = patchRes.data;
-        localStorage.setItem('userId', JSON.stringify(userId.value));
+        localStorage.setItem('userId', JSON.stringify(user.value));
       }
 
       toastStore.showToast('회원정보가 수정되었습니다.', 'success');
@@ -83,65 +83,34 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // async function updateUser(userId, updatedData) {
-  //   const toastStore = useToastStore();
-  //   loading.value = true;
-  //   error.value = null;
-  //   try {
-  //     // Step 1: 해당 사용자 정보 조회해서 numeric ID 얻기
-  //     const getRes = await axios.get(`${API_URL}?id=${userId}`);
-  //     if (!getRes.data.length) {
-  //       throw new Error('해당 사용자를 찾을 수 없습니다.');
-  //     }
-
-  //     const numericId = getRes.data[0].id;
-
-  //     // Step 2: 해당 numeric ID로 PATCH 요청
-  //     const patchRes = await axios.patch(`${API_URL}/${userId}`, updatedData);
-
-  //     // 상태 업데이트
-  //     if (user.value && user.value.id === userId) {
-  //       user.value = patchRes.data;
-  //       localStorage.setItem('user', JSON.stringify(user.value));
-  //     }
-
-  //     toastStore.showToast('회원정보가 수정되었습니다.', 'success');
-  //     return patchRes.data;
-  //   } catch (err) {
-  //     error.value = err.message || '회원정보 수정 실패';
-  //     toastStore.showToast(error.value, 'error');
-  //     throw err;
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // }
-
   // 로그인 (GET)
   async function login(loginId, loginPw) {
     const toastStore = useToastStore();
     loading.value = true;
     error.value = null;
+
     try {
-      const response = await axios.get(
-        `${API_URL}?id=${loginId}&password=${loginPw}`
-      );
-      if (response.data.length) {
-        user.value = response.data[0];
+      // db에서 사용자 id만 가져오기
+      const response = await axios.get(`${API_URL}/${loginId}`);
+      const foundUser = response.data;
+
+      // 사용자 정보가 존재하는지 확인하고, 비밀번호 비교
+      if (foundUser && foundUser.password === loginPw) {
+        user.value = foundUser;
         isLoggedIn.value = true;
         toastStore.showToast('로그인 성공', 'success');
 
-        // 로그인 성공 시 상태 저장
-        localStorage.setItem('user', JSON.stringify(user.value));
-        localStorage.setItem('isLoggedIn', 'true');
+        // 로그인 성공 시 userid만 로컬스토리지에 저장
+        localStorage.setItem('userId', foundUser.id);
 
         return true;
       } else {
-        throw new Error('로그인 실패: 아이디/비밀번호 불일치');
+        throw new Error('아이디 또는 비밀번호가 일치하지 않습니다.');
       }
     } catch (err) {
-      error.value = err.message;
+      error.value = err.message || '로그인 실패';
       toastStore.showToast(error.value, 'error');
-      throw err;
+      return false;
     } finally {
       loading.value = false;
     }

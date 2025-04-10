@@ -5,9 +5,9 @@
       "user_name": "토깽",
       "user_nickname": "토깽",
       "phone_num": "010-1234-5678",
-      "email": "tokkaeng@example.com",
-      "password": "password123",
-      "name": "토깽3355"
+      "email": "dasasd",
+      "password": "dsasacccc",
+      "name": "dsaasd"
     },
     {
       "id": "tokkaeng1",
@@ -46,52 +46,6 @@
     }
   ],
   "trade_list": [
-    {
-      "id": "a1",
-      "categoryId": 2,
-      "price": 3000,
-      "type": "income",
-      "date": "2025-04-07",
-      "desc": "용돈",
-      "userid": "tokkaeng"
-    },
-    {
-      "id": "a3",
-      "categoryId": 3,
-      "price": 50000,
-      "type": "income",
-      "date": "2025-04-05",
-      "desc": "부모님께 용돈",
-      "memo": "오예",
-      "userid": "tokkaeng"
-    },
-    {
-      "id": "a4",
-      "categoryId": 1,
-      "price": 44444,
-      "type": "income",
-      "date": "2025-04-04",
-      "desc": "",
-      "userid": "tokkaeng"
-    },
-    {
-      "id": "a5",
-      "categoryId": 5,
-      "price": 5800,
-      "type": "outcome",
-      "date": "2025-04-03",
-      "desc": "택시비",
-      "userid": "tokkaeng"
-    },
-    {
-      "id": "a6",
-      "categoryId": 2,
-      "price": 35000,
-      "type": "income",
-      "date": "2025-04-02",
-      "desc": "알바비",
-      "userid": "tokkaeng"
-    },
     {
       "id": "a7",
       "categoryId": 1,
