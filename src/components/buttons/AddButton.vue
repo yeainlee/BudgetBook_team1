@@ -1,11 +1,18 @@
 <script setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore';
 
 const router = useRouter();
+const userStore = useUserStore(); // Pinia 스토어 사용
+
+const userName = computed(() =>
+  userStore.isLoggedIn && userStore.user ? userStore.user.id : null
+);
 
 // 거래 등록 페이지로 이동
 function goToAddPage() {
-  router.push('/transaction/edit/:id');
+  router.push(`/transaction/edit`);
 }
 </script>
 
@@ -30,8 +37,8 @@ button {
   font-weight: bold;
   padding: 0;
   border-radius: 50%;
-  background-color: #add8e6;
-  border: 1px solid #ccc;
+  background-color: var(--button-color);
+  border: 1px solid var(--border-color);
   cursor: pointer;
 }
 </style>

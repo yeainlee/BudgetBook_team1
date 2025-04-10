@@ -3,12 +3,13 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useUserStore } from '@/store/userStore';
 import { useTransactionStore } from '@/store/transactionStore';
+import '@/assets/main.css';
 
-// 차트 색상 지정
-const blueLight = 'rgba(173, 216, 230, 0.85)';
-const blueMid = 'rgba(100, 149, 237, 0.85)';
-const blueDark = 'rgba(70, 130, 180, 0.85)';
-const border = 'rgba(0, 0, 0, 0.05)';
+// 색상 코드 받아오기
+const rootStyle = getComputedStyle(document.documentElement);
+const blueLight = rootStyle.getPropertyValue('--blue-light').trim();
+const blueDark = rootStyle.getPropertyValue('--blue-dark').trim();
+const border = rootStyle.getPropertyValue('--border-color').trim();
 
 // userID 받아오기
 const userStore = useUserStore();
@@ -69,6 +70,7 @@ onMounted(async () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: { position: 'bottom', labels: { color: '#333' } },
       tooltip: { enabled: true },
@@ -111,8 +113,8 @@ onMounted(async () => {
 <style scoped>
 canvas {
   width: 60%;
-  max-width: 1300px;
-  height: 100%;
+  max-width: 1000px;
+  height: auto;
   margin: 0 auto;
   display: block;
 }

@@ -43,6 +43,7 @@ const handleLogin = async () => {
     </div>
     <div class="login-container">
       <h1>Login</h1>
+      <br />
       <!-- 로그인 버튼 누르면 handleLogin 함수 실행 -->
       <form @submit.prevent="handleLogin" novalidate>
         <!-- 아이디 입력칸 -->
@@ -98,23 +99,24 @@ const handleLogin = async () => {
   height: 100vh;
 }
 .error-msg {
-  color: #d32f2f;
+  color: var(--red-color);
   margin: 0.5rem 0;
   font-size: 0.8rem;
   font-weight: 500;
 }
 .logo-container {
-  flex: 1;
+  flex: 1.2;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .logo {
-  max-width: 80%;
+  max-width: 1000px;
+  width: 100%;
   height: auto;
 }
 .login-container {
-  flex: 1;
+  flex: 0.8;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -127,51 +129,64 @@ h1 {
   font-size: 1.8rem;
   margin: 0;
   padding: 0;
-  text-align: left;
+  text-align: center;
   width: 100%;
 }
 .input-group {
+  display: flex;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
 input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #aaa;
-  border-radius: 6px;
+  width: 70%;
+  padding: 1rem;
+  border: 1.3px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 0.7rem auto;
 }
 
 button {
-  width: 100%;
+  width: 70%;
   padding: 0.75rem;
-  background-color: #b3e5fc;
-  color: #777;
+  background-color: var(--button-color);
+  color: white;
   border: none;
+  margin: 1rem auto;
+  display: block;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 button:hover {
-  background-color: #81d4fa;
+  background-color: var(--blue-mid);
 }
 button:disabled {
-  background-color: #e0e0e0;
+  background-color: var(--background-color);
   color: #999;
   cursor: not-allowed;
 }
 .password-wrapper {
   position: relative;
+  width: 70%;
+  margin: 0 auto;
 }
 .password-wrapper input {
+  width: 100%;
+  padding: 1rem;
   padding-right: 2.5rem;
+  border: 1.3px solid var(--border-color);
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 0.7rem;
 }
 .eye-button {
   all: unset;
   position: absolute;
   top: 50%;
-  right: 0.5rem;
+  right: 1rem;
   transform: translateY(-50%);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
   line-height: 1;
 }
@@ -183,6 +198,7 @@ button:disabled {
 }
 
 .signup-text {
+  font-size: 1rem;
   text-align: center;
   margin-top: 1rem;
 }

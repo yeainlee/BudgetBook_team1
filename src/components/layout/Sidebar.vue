@@ -44,7 +44,7 @@ const menuItems = [
   },
   {
     icon: 'fa-solid fa-plus',
-    route: '/transaction/edit/:id',
+    route: '/transaction/edit',
     name: '거래추가',
   },
   {
@@ -62,14 +62,11 @@ const isActive = (path) => {
   if (
     path === '/transaction' &&
     route.path.startsWith('/transaction') &&
-    route.path !== '/transaction/edit/:id'
+    route.path !== '/transaction/edit'
   ) {
     return true;
   }
-  if (
-    path === '/transaction/edit/:id' &&
-    route.path === '/transaction/edit/:id'
-  ) {
+  if (path === '/transaction/edit' && route.path === '/transaction/edit') {
     return true;
   }
   if (path === '/my' && route.path === '/my') {
@@ -95,12 +92,12 @@ const handleLogout = () => {
 <style scoped>
 .sidebar {
   width: 60px;
-  background: #ffffff;
+  background: var(--background);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; /* 중앙 정렬로 변경 */
-  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 0 4px var(--border-color);
   height: 100vh; /* 전체 높이 사용 */
   padding: 20px 0; /* 상하 패딩 추가 */
 }
@@ -127,16 +124,17 @@ const handleLogout = () => {
 
 .icon:hover {
   opacity: 0.7;
-  background-color: #f5f5f5;
+  background-color: var(--blue-light);
   border-radius: 10px;
+  color: var(--blue-dark);
 }
 
 .icon.active {
   opacity: 1;
-  background-color: #eef7ff;
+  background-color: var(--background-color);
   border-radius: 10px;
   padding: 8px;
-  color: #1e88e5;
+  color: var(--button-color);
 }
 
 .logout-container {
@@ -145,10 +143,11 @@ const handleLogout = () => {
 }
 
 .logout {
-  color: #e53935; /* 로그아웃 아이콘 색상을 빨간색으로 변경 */
+  color: var(--red-color); /* 로그아웃 아이콘 색상을 빨간색으로 변경 */
 }
 
 .logout:hover {
-  background-color: rgba(229, 57, 53, 0.1); /* 호버 시 빨간색 배경 */
+  background-color: var(--red-hover); /* 호버 시 빨간색 배경 */
+  color: var(--red-color);
 }
 </style>

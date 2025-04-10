@@ -12,14 +12,16 @@ const toastStore = useToastStore(); // 토스트
 
 const isEdit = computed(() => !!route.params.id); //주소에 id있으면 수정 없으면 새로 등록
 const tradeId = route.params.id; //URL에 있는 거래의 고유 ID 땡긴댜
+// console.log(`tradeID : `, tradeId);
 //const userId = 'tokkaeng'; // 실제로는 Pinia 등에서 가져와야 한다고함
 const userStore = useUserStore();
 const userId = userStore.user?.id;
-
+// console.log(`userID :`, userId);
+// console.log(`Route`, route.params);
 const type = ref('income'); // 수입/지출 선택
 const date = ref(''); //날짜
 const price = ref(0); //돈
-const categoryId = ref(''); //카테괼 아이디
+const categoryId = ref(''); //카테고리 아이디
 const desc = ref(''); //사용하는놈이 쓴 내용
 const categoryList = ref([]); //카테 목록
 
