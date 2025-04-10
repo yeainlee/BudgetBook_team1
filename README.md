@@ -123,6 +123,58 @@
 ---
 
 <br/>
+📁 프로젝트 전체 디렉토리 구조
+
+```
+📁 src/
+├── App.vue
+├── main.js
+│
+├── 📁assets/
+│   └── main.css
+│
+├── 📁components/
+│   ├── 📁layout/
+│   │   ├── Sidebar.vue
+│   │   └── Header.vue
+│   │
+│   ├── 📁charts/
+│   │   └── MonthlyChart.vue
+│   │   └── DoughnutChart.vue
+│   │
+│   ├── 📁transactions/
+│   │   ├── TransactionCard.vue
+│   │   ├── TransactionList.vue
+│   │   ├── RecentTransactionList.vue
+│   │
+│   └── 📁buttons/
+│       └── AddButton.vue
+│
+├── 📁views/
+│   ├── LoginPage.vue
+│   ├── JoinPage.vue
+│   ├── MainPage.vue
+│   ├── TransactionPage.vue
+│   ├── TransactionEditPage.vue        .
+│   └── MyPage.vue
+│
+├── 📁store/
+│   ├── userStore.js
+│   └── transactionStore.js
+│   └── toastStore.js
+│
+├── ToastNotification.vue
+│
+├── 📁router/
+│   └── index.js
+│
+├── 📁img/
+│   └── bunny.png
+│   └── Logo.png
+
+```
+
+<br/>
 
 ## 🧑‍💻 **팀원 소개**
 
