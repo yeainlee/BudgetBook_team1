@@ -2,7 +2,7 @@
   "user_list": [
     {
       "id": "tokkaeng",
-      "user_name": "토깽",
+      "user_name": "토깽이에용",
       "user_nickname": "토깽",
       "phone_num": "010-1234-5678",
       "email": "tokkaeng@example.com",
@@ -74,17 +74,7 @@
       "type": "outcome"
     }
   ],
-
   "trade_list": [
-    {
-      "id": "a1",
-      "categoryId": 2,
-      "price": 3000,
-      "type": "income",
-      "date": "2025-04-07",
-      "desc": "용돈",
-      "userid": "tokkaeng"
-    },
     {
       "id": "a2",
       "categoryId": 4,
@@ -139,6 +129,15 @@
       "date": "2025-04-01",
       "desc": "KB 월급",
       "userid": "tokkaeng1"
+    },
+    {
+      "id": "199c",
+      "userid": "tokkaeng",
+      "type": "income",
+      "date": "2025-04-19",
+      "price": 20000000,
+      "categoryId": 1,
+      "desc": "간식비222222222"
     }
   ]
 }
