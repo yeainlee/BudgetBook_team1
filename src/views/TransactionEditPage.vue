@@ -72,7 +72,7 @@ const handleSubmit = async () => {
 
     toastStore.showToast('저장되었습니다.', 'success');
     setTimeout(() => {
-      router.push('/transactions');
+      router.push('/transaction');
     }, 2000);
   } catch (error) {
     console.error('저장 실패:', error);
@@ -83,7 +83,7 @@ const handleSubmit = async () => {
 const handleDelete = async () => {
   if (confirm('정말 삭제하시겠습니까?')) {
     await axios.delete(`/trade_list/${tradeId}`);
-    router.push('/transactions');
+    router.push('/transaction');
   }
 }; //삭제
 
