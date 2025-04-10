@@ -49,6 +49,20 @@ const handleCancel = () => {
   }, 1500); // 토스트 잠깐 보여주고 이동 (1.5초 후)
 };
 
+const formattedPrice = ref('');
+
+// 숫자(price)가 바뀌면 formattedPrice도 쉼표 포함된 문자열로 자동 갱신
+watch(price, (newPrice) => {
+  formattedPrice.value = newPrice.toLocaleString();
+});
+
+// 입력한 문자열을 숫자로 변환해서 price에 저장
+const handlePriceInput = (event) => {
+  const rawValue = event.target.value.replace(/,/g, ''); // , 제거
+  const numericValue = Number(rawValue); //문자열 숫자로 변환
+  price.value = isNaN(numericValue) ? 0 : numericValue; //숫자아니면 0, 숫자면 저장
+};
+
 const handleSubmit = async () => {
   const payload = {
     userid: userId,
@@ -124,10 +138,11 @@ onMounted(() => {
     <div class="input M-input">
       <span class="currency">₩</span>
       <input
-        type="number"
+        type="text"
         id="inputmoney"
         class="form-control"
-        v-model="price"
+        :value="formattedPrice"
+        @input="handlePriceInput"
       />
     </div>
     <br />
