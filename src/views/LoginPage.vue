@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore';
 import logo from '@/img/Logo.png';
+import { useToastStore } from '@/store/toastStore';
+import ToastMessage from '@/components/ToastNotification.vue';
 
 const router = useRouter();
 const userStore = useUserStore(); //pinia store 사용
@@ -27,14 +29,16 @@ const handleLogin = async () => {
       router.push('/main');
     }
   } catch (err) {
-    errorMessage.value = err.message || '로그인에 실패했습니다.';
+    // errorMessage.value = '로그인에 실패했습니다.';
+    // console.log('err:message : ' + errorMessage.value);
+    toastStore.showToast(errorMessage.value, 'error');
   }
 };
 </script>
 
 <template>
   <!-- <RouterView /> -->
-  <!-- <ToastNotification /> -->
+  <ToastMessage />
 
   <div class="login-page">
     <!-- 로고 이미지 추가 -->
